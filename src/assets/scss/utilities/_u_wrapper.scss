@@ -1,0 +1,12 @@
+.u_wrapper {
+  width: 100%;
+  max-width:rem(1200);
+  margin-inline-start:auto;
+  margin-inline-end:auto;
+  margin-block-start: 0;
+  margin-block-end: 0;
+
+  &--wide {
+    max-width:rem(1410);
+  }
+}

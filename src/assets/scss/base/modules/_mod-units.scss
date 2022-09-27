@@ -1,0 +1,37 @@
+/* != Base Module - UNITS */
+
+//
+// @variables
+//
+
+//
+// @functions
+//
+
+@function parseInt($n) {
+  @return $n / ($n * 0 + 1);
+}
+
+/* CONVERT PIXELS TO EMS */
+/*
+Parameters: @pixels value (no units), optional @context value (no units) e.g. if you are calculating padding on an element that has a font size applied already.
+*/
+@function em($pixels, $context: $textBase) {
+  @return #{$pixels/$context}em;
+}
+
+@function rem($pixels, $context: $textBase) {
+  @return #{$pixels/$context}rem;
+}
+
+@function px($pixels) {
+  @return #{$pixels}px;
+}
+
+@function vw($pixels,$context) {
+  @return #{($pixels/$context)*100}vw;
+}
+
+//
+// @mixins
+//
