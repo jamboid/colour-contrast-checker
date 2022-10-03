@@ -23,6 +23,8 @@ $size-xl: 56px;
   --dt-sys-space-m:calc(var(--dt-ref-size-unit) * 2);
   --dt-sys-space-l:calc(var(--dt-ref-size-unit) * 6);
 
+  --dt-sys-main-spacing:var(--dt-ref-size-m-l);
+
   --dt-sys-size-icon-large:calc(var(--dt-ref-size-medium)* 2);
 
   --dt-sys-shadow-double-light:0px 0px 0px 2px var(--dt-ref-clr-grey-1000), 0px 0px 0px 4px var(--dt-ref-clr-grey-800);

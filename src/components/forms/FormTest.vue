@@ -11,10 +11,10 @@
       label="Token Value"
       v-model="state.tokenValue"
     ></FormFieldText>
-    <FormButtonSubmit
+    <FormActionSubmit
       :onClick="submitForm"
       buttonLabel="Save token"
-    ></FormButtonSubmit>
+    ></FormActionSubmit>
   </form>
 </template>
 
@@ -23,8 +23,8 @@
 import { reactive, computed } from "vue";
 import useValidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
-import FormFieldText from "@/components/Forms/FormFieldText.vue";
-import FormButtonSubmit from "@/components/Forms/FormButtonSubmit.vue";
+import FormFieldText from "@/components/forms/FormFieldText.vue";
+import FormAction from "@/components/forms/FormAction.vue";
 
 // Data
 const state = reactive({
