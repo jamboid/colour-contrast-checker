@@ -113,6 +113,7 @@ const failList = computed(() => {
     flex-wrap: wrap;
     gap: 25px;
     align-items: flex-start;
+    --flow-space: var(--dt-ref-size-l-xl);
   }
 }
 </style>
