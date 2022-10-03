@@ -2,22 +2,23 @@
   <div class="b_contrast">
     <div class="b_contrast__pair">
       <div class="b_contrast__colour">
-      <div
-        class="b_contrast__sample--primary b_contrast__sample"
-        :style="primaryStyleObject"
-      ></div>
-      <h3 class="b_contrast__colourHex">{{ primaryColour }}</h3>
+        <div
+          class="b_contrast__sample--primary b_contrast__sample"
+          :style="primaryStyleObject"
+        ></div>
+        <h3 class="b_contrast__colourHex">{{ primaryColour }}</h3>
+      </div>
+      <div class="b_contrast__colour">
+        <div
+          class="b_contrast__sample--secondary b_contrast__sample"
+          :style="secondaryStyleObject"
+        ></div>
+        <h3 class="b_contrast__colourHex">{{ contrastColour }}</h3>
+      </div>
     </div>
-    <div class="b_contrast__colour">
-      <div
-        class="b_contrast__sample--secondary b_contrast__sample"
-        :style="secondaryStyleObject"
-      ></div>
-      <h3 class="b_contrast__colourHex">{{ contrastColour }}</h3>
-    </div>
-    </div>
-    <component class="b_contrast__icon" :is="ratingIcon"></component>
+
     <div class="b_contrast__details">
+      <component class="b_contrast__icon" :is="ratingIcon"></component>
       <p>{{ contrastRatio }} {{ contrastRating }}</p>
     </div>
   </div>
@@ -84,13 +85,18 @@ const ratingIcon = computed(() => {
 
 <style lang="scss" scoped>
 .b_contrast {
+  $self: &;
+
   display: grid;
   justify-items: center;
+  gap: 0;
   //padding: 4px;
   background: #fafafa;
   //border: 3px solid #ccc;
-  //border-radius: 15px;
+  border-radius: 2px;
   width: 200px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
 
   &__pair {
     width: 100%;
@@ -101,17 +107,18 @@ const ratingIcon = computed(() => {
 
   &__colour {
     display: grid;
-    grid-gap:10px;
+    grid-gap: 12px;
     justify-items: center;
   }
 
   &__colourHex {
-    font:var(--dt-sys-text-code-400);
+    font: var(--dt-sys-text-code-400);
   }
 
   &__sample {
-    height: 50px;
+    height: 80px;
     width: 100px;
+    //box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
   }
 
   &__icon {
@@ -122,7 +129,10 @@ const ratingIcon = computed(() => {
   }
 
   &__details {
-    padding: 0 0 5px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding: 10px;
   }
 }
 </style>

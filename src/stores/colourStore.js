@@ -36,6 +36,36 @@ export const useColourStore = defineStore({
 
       return uniqueCombinations.filter(((a = {}), (b) => !(a[b] = b in a)));
     },
+    passColourCombinations() {
+      const combos = [];
+      this.uniqueColourCombinations.forEach((item) => {
+        if (item[2] > 4.5) {
+          combos.push(item);
+        }
+      });
+
+      return combos;
+    },
+    largePassColourCombinations() {
+      const combos = [];
+      this.uniqueColourCombinations.forEach((item) => {
+        if (item[2] >= 3 && item[2] < 4.5) {
+          combos.push(item);
+        }
+      });
+
+      return combos;
+    },
+    failColourCombinations() {
+      const combos = [];
+      this.uniqueColourCombinations.forEach((item) => {
+        if (item[2] < 3) {
+          combos.push(item);
+        }
+      });
+
+      return combos;
+    },
   },
 
   actions: {

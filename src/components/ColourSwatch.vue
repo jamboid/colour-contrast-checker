@@ -68,23 +68,23 @@ const filterColourList = computed(() => {
   display: grid;
   grid-template-columns: 40px 1fr;
   gap: 10px;
-  padding:8px;
-  background:var(--dt-ref-clr-grey-1000);
-  border-radius:var(--dt-sys-border-rad-normal);
+  padding: 8px;
+  background: var(--dt-ref-clr-grey-1000);
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
 
   &__colour {
     align-self: stretch;
-    display:flex;
+    display: flex;
   }
 
   &__sample {
     width: 40px;
     height: 40px;
     display: inline-block;
-    border: 1px solid #aaa;
-    border-radius: 5px;
     grid-column: 1;
     align-self: stretch;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+    border-radius: 2px;
   }
 
   &__details {

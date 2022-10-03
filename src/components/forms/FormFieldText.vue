@@ -98,14 +98,13 @@ const IconComponent = computed(() => {
   }
 
   &__field {
-    border: 2px solid var(--dt-ref-clr-grey-800);
-    border-radius: var(--dt-sys-form-field-border-radius, 3px);
+    border: 1px solid var(--dt-ref-clr-grey-800);
     display: flex;
   }
 
   &__fieldIcon,
   &__input {
-    background-color:var(--dt-ref-clr-grey-1000);
+    background-color: var(--dt-ref-clr-grey-1000);
   }
 
   &__fieldIcon {
@@ -116,7 +115,7 @@ const IconComponent = computed(() => {
   }
 
   &__input {
-    font:var(--dt-sys-text-code-400);
+    font: var(--dt-sys-text-code-400);
     padding: 0.5em 0.85em;
     width: 100%;
     border: none;

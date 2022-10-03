@@ -15,8 +15,8 @@
         buttonMode="submit"
         buttonType="icon"
       >
-        <FieldIconPlus></FieldIconPlus></FormAction
-      >
+        <FieldIconPlus></FieldIconPlus
+      ></FormAction>
     </form>
   </div>
 </template>

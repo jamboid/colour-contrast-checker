@@ -38,6 +38,7 @@ body {
 .b_page {
   display: grid;
   grid-template-columns: 330px 1fr;
+  min-height: 100vh;
 
   &__header {
     grid-column: 1;

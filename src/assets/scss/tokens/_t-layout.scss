@@ -18,12 +18,12 @@ $size-xl: 56px;
   --dt-sys-border-rad-normal: var(--dt-ref-size-small);
   --dt-sys-border-rad-small: calc(var(--dt-ref-size-unit)/2);
 
-  --dt-sys-space-xs:calc(var(--dt-ref-size-unit)*0.75);
-  --dt-sys-space-s:var(--dt-ref-size-unit); 
-  --dt-sys-space-m:calc(var(--dt-ref-size-unit) * 2);
-  --dt-sys-space-l:calc(var(--dt-ref-size-unit) * 6);
+  --dt-sys-size-xs:calc(var(--dt-ref-size-unit)*0.75);
+  --dt-sys-size-s:var(--dt-ref-size-unit); 
+  --dt-sys-size-m:calc(var(--dt-ref-size-unit) * 3);
+  --dt-sys-size-l:calc(var(--dt-ref-size-unit) * 6);
 
-  --dt-sys-main-spacing:var(--dt-ref-size-m-l);
+  --dt-sys-main-spacing:var(--dt-sys-size-m);
 
   --dt-sys-size-icon-large:calc(var(--dt-ref-size-medium)* 2);
 

@@ -69,20 +69,32 @@ const isIconButton = computed(() => {
     cursor: pointer;
     border-radius: 0.2em;
     line-height: var(--button-lineheight, 1);
-  }
-
-  &--delete {
-    --button-background: var(--dt-ref-clr-red-400);
+    transition: background-color var(--dt-sys-trans-short);
   }
 
   &--icon {
-    --button-padding: 0.5em;
+    --button-padding: 0.35em;
     --button-lineheight: 0;
 
     #{ $self }__button {
       display: flex;
       justify-content: center;
       align-items: center;
+      width: 38px;
+      height: 38px;
+    }
+  }
+
+  &--delete {
+    --button-background: var(--dt-ref-clr-grey-800);
+
+    &:hover {
+      --button-background: var(--dt-ref-clr-red-400);
+    }
+
+    #{ $self }__button {
+      width: 30px;
+      height: 30px;
     }
   }
 }
