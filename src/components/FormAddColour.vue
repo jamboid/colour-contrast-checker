@@ -24,9 +24,9 @@
 <script setup>
 // Imports
 import { reactive, computed, ref } from "vue";
-import FormFieldText from "@/components/forms/FormFieldText.vue";
-import FormAction from "@/components/forms/FormAction.vue";
-import FieldIconPlus from "@/components/forms/icons/FieldIconPlus.vue";
+import FormFieldText from "@/components/FormFieldText.vue";
+import FormAction from "@/components/FormAction.vue";
+import FieldIconPlus from "@/components/icons/FieldIconPlus.vue";
 import useValidate from "@vuelidate/core";
 import { required, helpers } from "@vuelidate/validators";
 import { useColourStore } from "@/stores/colourStore";

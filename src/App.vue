@@ -1,5 +1,6 @@
 <template>
   <div class="b_page">
+    <ThePageHeader></ThePageHeader>
     <header class="b_page__header">
       <FormAddColourVue></FormAddColourVue>
       <SwatchList></SwatchList>
@@ -12,8 +13,8 @@
 
 <script setup>
 import { onMounted } from "vue";
-
-import FormAddColourVue from "@/components/forms/FormAddColour.vue";
+import ThePageHeader from "./components/ThePageHeader.vue";
+import FormAddColourVue from "@/components/FormAddColour.vue";
 import SwatchList from "@/components/SwatchList.vue";
 import CombinationsList from "./components/CombinationsList.vue";
 import { useColourStore } from "@/stores/colourStore";
@@ -38,22 +39,18 @@ body {
 .b_page {
   display: grid;
   grid-template-columns: 330px 1fr;
+  grid-template-rows: auto 1fr;
   min-height: 100vh;
 
   &__header {
-    grid-column: 1;
-    grid-row: 1;
-    display: grid;
-    grid-template-rows: auto 1fr;
-    gap: 0;
-    overflow: auto;
-    overscroll-behavior: unset;
     background: var(--dt-ref-clr-grey-900);
+    grid-column: 1;
+    grid-row: 2;
   }
 
   &__content {
     grid-column: 2;
-    grid-row: 1;
+    grid-row: 2;
   }
 }
 </style>

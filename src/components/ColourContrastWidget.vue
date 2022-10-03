@@ -19,7 +19,9 @@
 
     <div class="b_contrast__details">
       <component class="b_contrast__icon" :is="ratingIcon"></component>
-      <p>{{ contrastRatio }} {{ contrastRating }}</p>
+      <p>
+        <strong>{{ contrastRating }}</strong> ({{ contrastRatio }})
+      </p>
     </div>
   </div>
 </template>
@@ -93,7 +95,7 @@ const ratingIcon = computed(() => {
   //padding: 4px;
   background: #fafafa;
   //border: 3px solid #ccc;
-  border-radius: 2px;
+  border-radius: var(--dt-sys-border-rad-small);
   width: 200px;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
   overflow: hidden;
@@ -107,7 +109,7 @@ const ratingIcon = computed(() => {
 
   &__colour {
     display: grid;
-    grid-gap: 12px;
+    grid-gap: 6px;
     justify-items: center;
   }
 
@@ -116,15 +118,15 @@ const ratingIcon = computed(() => {
   }
 
   &__sample {
-    height: 80px;
+    height: 60px;
     width: 100px;
     //box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
   }
 
   &__icon {
-    width: 40px;
-    height: 40px;
-    border: 4px solid #fafafa;
+    width: 24px;
+    height: 24px;
+    border: 1px solid #fafafa;
     border-radius: 50px;
   }
 
@@ -132,7 +134,10 @@ const ratingIcon = computed(() => {
     display: flex;
     gap: 8px;
     align-items: center;
-    padding: 10px;
+    padding: 4px 12px 4px 4px;
+    background: rgba(0, 0, 0, 0.1);
+    margin: 20px 20px 10px;
+    border-radius: 45px;
   }
 }
 </style>

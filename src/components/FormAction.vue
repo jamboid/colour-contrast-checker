@@ -67,9 +67,9 @@ const isIconButton = computed(() => {
     background: var(--button-background, var(--dt-ref-clr-blue-100));
     color: var(--button-text, var(--dt-ref-clr-grey-1000));
     cursor: pointer;
-    border-radius: 0.2em;
     line-height: var(--button-lineheight, 1);
     transition: background-color var(--dt-sys-trans-short);
+    border-radius: var(--dt-sys-border-rad-form-field);
   }
 
   &--icon {

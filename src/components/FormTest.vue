@@ -23,8 +23,8 @@
 import { reactive, computed } from "vue";
 import useValidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
-import FormFieldText from "@/components/forms/FormFieldText.vue";
-import FormAction from "@/components/forms/FormAction.vue";
+import FormFieldText from "@/components/FormFieldText.vue";
+import FormAction from "@/components/FormAction.vue";
 
 // Data
 const state = reactive({

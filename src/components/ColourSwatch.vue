@@ -21,8 +21,8 @@
 <script setup>
 // Imports
 import { reactive, computed, ref } from "vue";
-import FormAction from "@/components/forms/FormAction.vue";
-import FieldIconCross from "@/components/forms/icons/FieldIconCross.vue";
+import FormAction from "@/components/FormAction.vue";
+import FieldIconCross from "@/components/icons/FieldIconCross.vue";
 import { useColourStore } from "@/stores/colourStore";
 
 const colourStore = useColourStore();

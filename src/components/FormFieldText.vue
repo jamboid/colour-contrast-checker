@@ -26,7 +26,7 @@
 <script setup>
 // Imports
 import { computed } from "vue";
-import HexIcon from "@/components/forms/icons/FieldIconHex.vue";
+import HexIcon from "@/components/icons/FieldIconHex.vue";
 
 const props = defineProps({
   id: {
@@ -98,7 +98,9 @@ const IconComponent = computed(() => {
   }
 
   &__field {
-    border: 1px solid var(--dt-ref-clr-grey-800);
+    border: 1px solid var(--dt-sys-clr-form-field-border);
+    border-radius: var(--dt-sys-border-rad-form-field);
+    overflow: hidden;
     display: flex;
   }
 

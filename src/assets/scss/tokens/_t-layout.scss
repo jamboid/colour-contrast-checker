@@ -8,15 +8,19 @@ $size-xl: 56px;
   --dt-ref-size-small:0.5rem;
   --dt-ref-size-medium: 1rem;
   --dt-ref-size-large: 2rem;
+  --dt-ref-size-xl: #{$size-xl};
   --dt-ref-size-xs-l: #{clamped($size-xs,$size-l)};
   --dt-ref-size-s-l:#{clamped($size-s,$size-l)};
   --dt-ref-size-m-l:#{clamped($size-m,$size-l)};
+  --dt-ref-size-l-xl:#{clamped($size-m,$size-l)};
 
   --dt-ref-size-unit:8px;
 
   --dt-sys-border-rad-large:var(--dt-ref-size-medium); 
   --dt-sys-border-rad-normal: var(--dt-ref-size-small);
   --dt-sys-border-rad-small: calc(var(--dt-ref-size-unit)/2);
+
+  --dt-sys-border-rad-form-field:5px;
 
   --dt-sys-size-xs:calc(var(--dt-ref-size-unit)*0.75);
   --dt-sys-size-s:var(--dt-ref-size-unit); 
