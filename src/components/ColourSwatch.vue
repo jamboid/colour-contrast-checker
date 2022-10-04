@@ -70,7 +70,8 @@ const filterColourList = computed(() => {
   gap: 10px;
   padding: 8px;
   background: var(--dt-ref-clr-grey-1000);
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--dt-sys-shadow-card);
+  border-radius: var(--dt-sys-border-rad-small);
 
   &__colour {
     align-self: stretch;

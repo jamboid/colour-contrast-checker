@@ -93,11 +93,11 @@ const ratingIcon = computed(() => {
   justify-items: center;
   gap: 0;
   //padding: 4px;
-  background: #fafafa;
+  background: var(--dt-ref-clr-grey-1000);
   //border: 3px solid #ccc;
   border-radius: var(--dt-sys-border-rad-small);
   width: 200px;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--dt-sys-shadow-card);
   overflow: hidden;
 
   &__pair {
@@ -126,7 +126,7 @@ const ratingIcon = computed(() => {
   &__icon {
     width: 24px;
     height: 24px;
-    border: 1px solid #fafafa;
+    border: 1px solid var(--dt-ref-clr-grey-900);
     border-radius: 50px;
   }
 
