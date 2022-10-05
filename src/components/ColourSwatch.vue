@@ -85,7 +85,7 @@ const filterColourList = computed(() => {
     grid-column: 1;
     align-self: stretch;
     box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
-    border-radius: 2px;
+    border-radius: 50%;
   }
 
   &__details {

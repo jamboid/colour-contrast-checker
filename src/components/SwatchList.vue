@@ -37,9 +37,8 @@ const coloursArray = computed(() => {
 .b_swatchList {
   --flow-space: 10px;
   padding: var(--dt-sys-main-spacing);
-  padding-block-start: 0;
   position: sticky;
-  top: 20px;
+  top: 0;
   overflow: auto;
   overscroll-behavior: unset;
   max-height: calc(100vh - 20px);

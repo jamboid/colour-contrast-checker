@@ -95,10 +95,12 @@ const IconComponent = computed(() => {
   &__label {
     font: var(--dt-sys-heading-700);
     color: var(--dt-ref-clr-grey-200);
+    display: var(--form-field-label-display, block);
   }
 
   &__field {
-    border: 1px solid var(--dt-sys-clr-form-field-border);
+    border: 1px solid
+      var(--form-field-border-clr, var(--dt-sys-clr-form-field-border));
     border-radius: var(--dt-sys-border-rad-form-field);
     overflow: hidden;
     display: flex;
@@ -106,7 +108,10 @@ const IconComponent = computed(() => {
 
   &__fieldIcon,
   &__input {
-    background-color: var(--dt-ref-clr-grey-1000);
+    background-color: var(
+      --form-field-background-clr,
+      var(--dt-ref-clr-grey-1000)
+    );
   }
 
   &__fieldIcon {
@@ -126,14 +131,14 @@ const IconComponent = computed(() => {
 
   &--error {
     #{ $self }__field {
-      border-color: red;
+      border-color: var(--form-field-error-clr, var(--dt-ref-clr-red-400));
     }
   }
 
   &--icon {
     #{ $self }__fieldIcon {
-      [fill] {
-        fill: #666;
+      ::v-deep [fill] {
+        fill: var(--form-field-icon-clr, var(--dt-ref-clr-grey-100));
       }
     }
     #{ $self }__input {

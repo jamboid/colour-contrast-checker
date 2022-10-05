@@ -1,22 +1,31 @@
 <template>
   <div class="b_addColour">
-    <form action="" class="b_addColour__form">
-      <FormFieldText
-        id="textfield"
-        label="Add Colour Hex"
-        icon="hex"
-        :status="formMode"
-        v-model="state.colourValue"
-      ></FormFieldText>
-      <FormAction
-        :onClick="submitForm"
-        buttonLabel="Add"
-        :status="formMode"
-        buttonMode="submit"
-        buttonType="icon"
-      >
-        <FieldIconPlus></FieldIconPlus
-      ></FormAction>
+    <form action="" class="b_addColour__form u_flow" @keyup="createPreview">
+      <h3 class="b_addColour__title">Add a hex colour</h3>
+
+      <fieldset class="b_addColour__fieldset">
+        <FormFieldText
+          id="textfield"
+          label="Add Colour Hex"
+          icon="hex"
+          :status="formMode"
+          v-model="state.colourValue"
+        ></FormFieldText>
+        <div
+          class="b_addColour__preview"
+          :style="previewStyleObject"
+          v-if="validColour"
+        ></div>
+        <FormAction
+          :onClick="submitForm"
+          buttonLabel="Add"
+          :status="formMode"
+          buttonMode="submit"
+          buttonType="icon"
+        >
+          <FieldIconPlus></FieldIconPlus
+        ></FormAction>
+      </fieldset>
     </form>
   </div>
 </template>
@@ -52,7 +61,24 @@ const formMode = computed(() => {
   return state.formMode;
 });
 
+const createPreview = () => {
+  v$.value.$validate();
+};
+
+const previewStyleObject = computed(() => {
+  const formattedColour = "#" + state.colourValue;
+  return { backgroundColor: formattedColour };
+});
+
 const v$ = useValidate(rules, state);
+
+const validColour = computed(() => {
+  if (!v$.value.$error && state.colourValue !== "") {
+    return true;
+  }
+
+  return false;
+});
 
 const submitForm = async () => {
   v$.value.$validate(); // checks all inputs
@@ -72,19 +98,41 @@ const submitForm = async () => {
 
 <style lang="scss" scoped>
 .b_addColour {
-  padding: var(--dt-sys-main-spacing);
+  padding: calc(var(--dt-sys-main-spacing) * 2) var(--dt-sys-main-spacing)
+    var(--dt-sys-main-spacing);
   background: var(--dt-ref-clr-grey-900);
 
   &__form {
+    --form-field-border-clr: transparent;
+    --form-field-label-display: none;
+    --form-field-error-clr: transparent;
+    --form-field-icon-clr: var(--dt-ref-clr-grey-100);
+  }
+
+  &__title {
+    padding: 1px 5px;
+  }
+
+  &__fieldset {
+    --flow-space: 7px;
+
     display: flex;
-    align-items: end;
-    gap: 5px;
+    align-items: center;
+    gap: 10px;
     max-width: 400px;
     margin-inline-end: auto;
+    border: 1px solid var(--dt-sys-clr-form-field-border);
+    border-radius: var(--dt-sys-border-rad-form-field);
+    background-color: var(--dt-ref-clr-grey-1000);
+    padding: 1px 5px;
+  }
 
-    > * {
-      grid-column: 1 / -1;
-    }
+  &__preview {
+    flex: 0 0 30px;
+    width: 30px;
+    height: 30px;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
   }
 }
 </style>

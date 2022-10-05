@@ -70,6 +70,8 @@ const isIconButton = computed(() => {
     line-height: var(--button-lineheight, 1);
     transition: background-color var(--dt-sys-trans-short);
     border-radius: var(--dt-sys-border-rad-form-field);
+    width: var(--form-button-width, 30px);
+    height: var(--form-button-height, 30px);
   }
 
   &--icon {
@@ -80,8 +82,6 @@ const isIconButton = computed(() => {
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 38px;
-      height: 38px;
     }
   }
 
@@ -90,11 +90,6 @@ const isIconButton = computed(() => {
 
     &:hover {
       --button-background: var(--dt-ref-clr-red-400);
-    }
-
-    #{ $self }__button {
-      width: 30px;
-      height: 30px;
     }
   }
 }

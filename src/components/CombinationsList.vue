@@ -12,7 +12,7 @@
         </p>
       </div>
     </div>
-    <div class="b_combinations__list">
+    <div class="b_combinations__list" v-if="passList.length">
       <ColourContrastWidget
         v-for="(pair, index) in passList"
         :primaryColour="pair[0]"
@@ -33,7 +33,7 @@
         </p>
       </div>
     </div>
-    <div class="b_combinations__list">
+    <div class="b_combinations__list" v-if="largePassList.length">
       <ColourContrastWidget
         v-for="(pair, index) in largePassList"
         :primaryColour="pair[0]"
@@ -51,7 +51,7 @@
         <p>Colour combinations fail WCAG standard for colour contrast.</p>
       </div>
     </div>
-    <div class="b_combinations__list">
+    <div class="b_combinations__list" v-if="failList.length">
       <ColourContrastWidget
         v-for="(pair, index) in failList"
         :primaryColour="pair[0]"
