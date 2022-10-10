@@ -75,6 +75,7 @@ const deleteColour = async () => {
   background: var(--dt-ref-clr-grey-1000);
   box-shadow: var(--dt-sys-shadow-card);
   border-radius: var(--dt-sys-border-rad-small);
+  cursor: move;
 
   &__colour {
     align-self: stretch;
