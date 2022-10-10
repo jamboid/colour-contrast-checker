@@ -1,7 +1,10 @@
 <template>
   <div class="b_swatch">
     <div class="b_swatch__colour">
-      <div class="b_swatch__sample" :style="styleObject"></div>
+      <div
+        class="b_swatch__sample"
+        :style="{ backgroundColor: colourHex }"
+      ></div>
     </div>
     <div class="b_swatch__details">
       <p>{{ colourHex }}</p>
@@ -39,7 +42,7 @@ const props = defineProps({
   },
 });
 
-const styleObject = reactive({
+const styleObject = computed({
   backgroundColor: props.colourHex,
 });
 
@@ -47,17 +50,17 @@ const deleteColour = async () => {
   colourStore.removeColour(props.colourHex);
 };
 
-const filterColourList = computed(() => {
-  let colourArray = [...colourStore.colours];
+// const filterColourList = computed(() => {
+//   let colourArray = [...colourStore.colours];
 
-  if (colourArray.indexOf(props.colourHex) > -1) {
-    const indexOfColour = colourArray.indexOf(props.colourHex);
-    colourArray.splice(indexOfColour, 1);
-    return [...colourArray];
-  } else {
-    return false;
-  }
-});
+//   if (colourArray.indexOf(props.colourHex) > -1) {
+//     const indexOfColour = colourArray.indexOf(props.colourHex);
+//     colourArray.splice(indexOfColour, 1);
+//     return [...colourArray];
+//   } else {
+//     return false;
+//   }
+// });
 
 // Functions
 // function functionName(){}

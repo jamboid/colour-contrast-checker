@@ -1,132 +1,287 @@
+import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 import checkHexColourIsValid from "@/composables/checkHexColourIsValid";
 import getColoursFromURL from "@/composables/getColoursFromURL";
 import contrastRatio from "@/composables/calculateColourContrast";
 
-export const useColourStore = defineStore({
-  id: "colourStore",
+export const useColourStore = defineStore("colourStore", () => {
+  const colourSwatches = ref([]);
 
-  state: () => ({
-    colourSwatches: [],
-  }),
-
-  getters: {
-    colours: (state) => state.colourSwatches,
-    uniqueColourCombinations: (state) => {
-      const uniqueCombinations = [];
-      const colours = [...state.colourSwatches].sort();
-      let a;
-
-      colours.forEach((firstColour) => {
-        colours.forEach((secondColour) => {
-          if (firstColour !== secondColour) {
-            const colourPair = [];
-            colourPair.push(firstColour);
-            colourPair.push(secondColour);
-            colourPair.sort();
-
-            colourPair.push(
-              Math.round(contrastRatio(firstColour, secondColour) * 100) / 100
-            );
-
-            uniqueCombinations.push(colourPair);
-          }
-        });
-      });
-
-      return uniqueCombinations.filter(((a = {}), (b) => !(a[b] = b in a)));
+  // Getters (Computed)
+  const colours = computed({
+    get() {
+      return colourSwatches.value;
     },
-    passColourCombinations() {
-      const combos = [];
-      this.uniqueColourCombinations.forEach((item) => {
-        if (item[2] > 4.5) {
-          combos.push(item);
+    set(value) {
+      colourSwatches.value = value;
+    },
+  });
+
+  const uniqueColourCombinations = computed(() => {
+    const uniqueCombinations = [];
+    const colours = [...colourSwatches.value].sort();
+    let a;
+
+    colours.forEach((firstColour) => {
+      colours.forEach((secondColour) => {
+        if (firstColour !== secondColour) {
+          const colourPair = [];
+          colourPair.push(firstColour);
+          colourPair.push(secondColour);
+          colourPair.sort();
+
+          colourPair.push(
+            Math.round(contrastRatio(firstColour, secondColour) * 100) / 100
+          );
+
+          uniqueCombinations.push(colourPair);
         }
       });
+    });
 
-      return combos;
-    },
-    largePassColourCombinations() {
-      const combos = [];
-      this.uniqueColourCombinations.forEach((item) => {
-        if (item[2] >= 3 && item[2] < 4.5) {
-          combos.push(item);
+    return uniqueCombinations.filter(((a = {}), (b) => !(a[b] = b in a)));
+  });
+
+  const passColourCombinations = computed(() => {
+    const combos = [];
+    uniqueColourCombinations.value.forEach((item) => {
+      if (item[2] > 4.5) {
+        combos.push(item);
+      }
+    });
+
+    return combos;
+  });
+
+  const largePassColourCombinations = computed(() => {
+    const combos = [];
+    uniqueColourCombinations.value.forEach((item) => {
+      if (item[2] >= 3 && item[2] < 4.5) {
+        combos.push(item);
+      }
+    });
+
+    return combos;
+  });
+
+  const failColourCombinations = computed(() => {
+    const combos = [];
+    uniqueColourCombinations.value.forEach((item) => {
+      if (item[2] < 3) {
+        combos.push(item);
+      }
+    });
+
+    return combos;
+  });
+
+  // Functions (Actions)
+
+  function loadColoursFromQueryString() {
+    this.colourSwatches = [];
+
+    const coloursInURL = getColoursFromURL();
+
+    if (coloursInURL) {
+      // Separate values by comma
+      const coloursToAdd = coloursInURL.split("-");
+      // Format each value to a hex colour, check that it matches hex regex
+      // and push to state
+      coloursToAdd.forEach((element) => {
+        const formattedHex = "#" + element;
+
+        if (checkHexColourIsValid(formattedHex)) {
+          colourSwatches.value.push(formattedHex);
+        } else {
+          window.console.log("invalid colour: ", formattedHex);
         }
       });
+    }
+  }
 
-      return combos;
-    },
-    failColourCombinations() {
-      const combos = [];
-      this.uniqueColourCombinations.forEach((item) => {
-        if (item[2] < 3) {
-          combos.push(item);
-        }
-      });
+  function addColour(colourHexToAdd) {
+    if (!colourSwatches.value[colourHexToAdd]) {
+      colourSwatches.value.push(colourHexToAdd);
+      this.updateURLData();
+    }
+  }
 
-      return combos;
-    },
-  },
+  function removeColour(colourHexToRemove) {
+    const colourArray = colourSwatches;
 
-  actions: {
-    loadColoursFromQueryString() {
-      this.colourSwatches = [];
+    if (colourArray.value.indexOf(colourHexToRemove) > -1) {
+      const indexOfColour = colourArray.value.indexOf(colourHexToRemove);
+      colourArray.value.splice(indexOfColour, 1);
+      this.colourSwatches = colourArray;
 
-      const coloursInURL = getColoursFromURL();
+      this.updateURLData();
+    }
+  }
 
-      if (coloursInURL) {
-        // Separate values by comma
-        const coloursToAdd = coloursInURL.split("-");
-        // Format each value to a hex colour, check that it matches hex regex
-        // and push to state
-        coloursToAdd.forEach((element) => {
-          const formattedHex = "#" + element;
+  function updateURLData() {
+    const colourArray = colourSwatches;
+    let colourStringForURL = "";
 
-          if (checkHexColourIsValid(formattedHex)) {
-            this.colourSwatches.push(formattedHex);
-          } else {
-            window.console.log("invalid colour: ", formattedHex);
-          }
-        });
-      }
-    },
-    addColour(colourHexToAdd) {
-      if (!this.colourSwatches[colourHexToAdd]) {
-        this.colourSwatches.push(colourHexToAdd);
-        this.updateURLData();
-      }
-    },
-    removeColour(colourHexToRemove) {
-      const colourArray = this.colourSwatches;
+    colourArray.value.forEach((element) => {
+      const formattedColour = element.replace("#", "");
 
-      if (colourArray.indexOf(colourHexToRemove) > -1) {
-        const indexOfColour = colourArray.indexOf(colourHexToRemove);
-        colourArray.splice(indexOfColour, 1);
-        this.colourSwatches = colourArray;
+      colourStringForURL = colourStringForURL + "-" + formattedColour;
+    });
 
-        this.updateURLData();
-      }
-    },
-    updateURLData() {
-      const colourArray = this.colourSwatches;
-      let colourStringForURL = "";
+    if (colourStringForURL.charAt(0) === "-") {
+      colourStringForURL = colourStringForURL.slice(1);
+    }
 
-      colourArray.forEach((element) => {
-        const formattedColour = element.replace("#", "");
+    window.console.log(colourStringForURL);
 
-        colourStringForURL = colourStringForURL + "-" + formattedColour;
-      });
+    const currURL = new URL(document.URL);
+    const paramsInURL = new URLSearchParams(currURL.search);
+    const currState = history.state;
 
-      if (colourStringForURL.charAt(0) === "-") {
-        colourStringForURL = colourStringForURL.slice(1);
-      }
+    window.console.log(currState);
+    paramsInURL.set("colours", colourStringForURL);
+    window.location.search = paramsInURL.toString();
+  }
 
-      window.console.log(colourStringForURL);
-
-      const currURL = new URL(document.URL);
-      const paramsInURL = new URLSearchParams(currURL.search);
-      paramsInURL.set("colours", colourStringForURL);
-      window.location.search = paramsInURL.toString();
-    },
-  },
+  // Store API
+  return {
+    colourSwatches,
+    colours,
+    uniqueColourCombinations,
+    passColourCombinations,
+    largePassColourCombinations,
+    failColourCombinations,
+    loadColoursFromQueryString,
+    addColour,
+    removeColour,
+    updateURLData,
+  };
 });
+
+// export const useColourStore = defineStore({
+//   id: "colourStore",
+
+//   state: () => ({
+//     colourSwatches: [],
+//   }),
+
+//   getters: {
+//     colours: (state) => state.colourSwatches,
+//     uniqueColourCombinations: (state) => {
+//       const uniqueCombinations = [];
+//       const colours = [...state.colourSwatches].sort();
+//       let a;
+
+//       colours.forEach((firstColour) => {
+//         colours.forEach((secondColour) => {
+//           if (firstColour !== secondColour) {
+//             const colourPair = [];
+//             colourPair.push(firstColour);
+//             colourPair.push(secondColour);
+//             colourPair.sort();
+
+//             colourPair.push(
+//               Math.round(contrastRatio(firstColour, secondColour) * 100) / 100
+//             );
+
+//             uniqueCombinations.push(colourPair);
+//           }
+//         });
+//       });
+
+//       return uniqueCombinations.filter(((a = {}), (b) => !(a[b] = b in a)));
+//     },
+//     passColourCombinations() {
+//       const combos = [];
+//       this.uniqueColourCombinations.forEach((item) => {
+//         if (item[2] > 4.5) {
+//           combos.push(item);
+//         }
+//       });
+
+//       return combos;
+//     },
+//     largePassColourCombinations() {
+//       const combos = [];
+//       this.uniqueColourCombinations.forEach((item) => {
+//         if (item[2] >= 3 && item[2] < 4.5) {
+//           combos.push(item);
+//         }
+//       });
+
+//       return combos;
+//     },
+//     failColourCombinations() {
+//       const combos = [];
+//       this.uniqueColourCombinations.forEach((item) => {
+//         if (item[2] < 3) {
+//           combos.push(item);
+//         }
+//       });
+
+//       return combos;
+//     },
+//   },
+
+//   actions: {
+//     loadColoursFromQueryString() {
+//       this.colourSwatches = [];
+
+//       const coloursInURL = getColoursFromURL();
+
+//       if (coloursInURL) {
+//         // Separate values by comma
+//         const coloursToAdd = coloursInURL.split("-");
+//         // Format each value to a hex colour, check that it matches hex regex
+//         // and push to state
+//         coloursToAdd.forEach((element) => {
+//           const formattedHex = "#" + element;
+
+//           if (checkHexColourIsValid(formattedHex)) {
+//             this.colourSwatches.push(formattedHex);
+//           } else {
+//             window.console.log("invalid colour: ", formattedHex);
+//           }
+//         });
+//       }
+//     },
+//     addColour(colourHexToAdd) {
+//       if (!this.colourSwatches[colourHexToAdd]) {
+//         this.colourSwatches.push(colourHexToAdd);
+//         this.updateURLData();
+//       }
+//     },
+//     removeColour(colourHexToRemove) {
+//       const colourArray = this.colourSwatches;
+
+//       if (colourArray.indexOf(colourHexToRemove) > -1) {
+//         const indexOfColour = colourArray.indexOf(colourHexToRemove);
+//         colourArray.splice(indexOfColour, 1);
+//         this.colourSwatches = colourArray;
+
+//         this.updateURLData();
+//       }
+//     },
+//     updateURLData() {
+//       const colourArray = this.colourSwatches;
+//       let colourStringForURL = "";
+
+//       colourArray.forEach((element) => {
+//         const formattedColour = element.replace("#", "");
+
+//         colourStringForURL = colourStringForURL + "-" + formattedColour;
+//       });
+
+//       if (colourStringForURL.charAt(0) === "-") {
+//         colourStringForURL = colourStringForURL.slice(1);
+//       }
+
+//       window.console.log(colourStringForURL);
+
+//       const currURL = new URL(document.URL);
+//       const paramsInURL = new URLSearchParams(currURL.search);
+//       paramsInURL.set("colours", colourStringForURL);
+//       window.location.search = paramsInURL.toString();
+//     },
+//   },
+// });

@@ -1,10 +1,17 @@
 <template>
-  <div class="b_swatchList u_flow">
-    <ColourSwatch
-      v-for="(swatch, index) in coloursArray"
-      :colourHex="swatch"
-      v-bind:key="swatch"
-    ></ColourSwatch>
+  <div>
+    <draggable
+      class="b_swatchList u_flow"
+      v-model="colours"
+      @start="drag = true"
+      @end="drag = false"
+      @change="listOrderUpdated"
+      item-key="element"
+    >
+      <template #item="{ element }">
+        <ColourSwatch :colourHex="element"></ColourSwatch>
+      </template>
+    </draggable>
   </div>
 </template>
 
@@ -13,24 +20,17 @@
 import { reactive, computed, ref } from "vue";
 import { useColourStore } from "@/stores/colourStore";
 import ColourSwatch from "@/components/ColourSwatch.vue";
+import draggable from "vuedraggable";
+import { storeToRefs } from "pinia";
 
 const colourStore = useColourStore();
 
-// Data
-const state = reactive({
-  stateItem: [],
-});
+const { colours } = storeToRefs(colourStore);
+const { updateURLData } = colourStore;
 
-const props = defineProps({
-  propName: null,
-});
-
-const coloursArray = computed(() => {
-  return colourStore.colours;
-});
-
-// Functions
-// function functionName(){}
+const listOrderUpdated = function () {
+  updateURLData();
+};
 </script>
 
 <style lang="scss" scoped>
