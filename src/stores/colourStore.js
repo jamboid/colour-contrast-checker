@@ -53,7 +53,8 @@ export const useColourStore = defineStore("colourStore", () => {
         combos.push(item);
       }
     });
-    return combos;
+
+    return combos.sort(compare);
   });
 
   const largePassColourCombinations = computed(() => {
@@ -64,7 +65,7 @@ export const useColourStore = defineStore("colourStore", () => {
       }
     });
 
-    return combos;
+    return combos.sort(compare);
   });
 
   const failColourCombinations = computed(() => {
@@ -75,7 +76,7 @@ export const useColourStore = defineStore("colourStore", () => {
       }
     });
 
-    return combos;
+    return combos.sort(compare);
   });
 
   // Functions (Actions)
@@ -150,6 +151,16 @@ export const useColourStore = defineStore("colourStore", () => {
   function clearPalette() {
     this.colourSwatches = [];
     this.updateURLData();
+  }
+
+  function compare(a, b) {
+    if (a[2] > b[2]) {
+      return -1;
+    }
+    if (a[2] < b[2]) {
+      return 1;
+    }
+    return 0;
   }
 
   // Store API
