@@ -10,9 +10,8 @@
   --dt-ref-font-size-800: #{clamped(20px,24px)};
   --dt-ref-font-size-700: #{rem(18)};
   --dt-ref-font-size-400: #{rem(16)};
-  --dt-ref-font-size-300: #{rem(15)};
-  --dt-ref-font-size-300: #{rem(13)};
-  --dt-ref-font-size-200: #{rem(11)};
+  --dt-ref-font-size-300: #{rem(14)};
+  --dt-ref-font-size-200: #{rem(12)};
 
 
   --dt-sys-heading-1200: 300 var(--dt-ref-font-size-1200)/1 var(--dt-ref-fontFamily-base);
@@ -21,6 +20,7 @@
   --dt-sys-heading-700: 700 var(--dt-ref-font-size-700)/1 var(--dt-ref-fontFamily-base);
   
   --dt-sys-body-400: 400 var(--dt-ref-font-size-400)/1 var(--dt-ref-fontFamily-base);
+  --dt-sys-body-300: 400 var(--dt-ref-font-size-300)/1 var(--dt-ref-fontFamily-base);
   
   --dt-sys-text-code-400: 700 var(--dt-ref-font-size-400)/1 var(--dt-ref-fontFamily-code);
   --dt-sys-text-code-300: 700 var(--dt-ref-font-size-300)/1 var(--dt-ref-fontFamily-code);

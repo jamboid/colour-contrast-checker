@@ -42,10 +42,6 @@ const props = defineProps({
   },
 });
 
-const styleObject = computed({
-  backgroundColor: props.colourHex,
-});
-
 const deleteColour = async () => {
   colourStore.removeColour(props.colourHex);
 };

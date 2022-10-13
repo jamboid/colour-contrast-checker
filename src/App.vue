@@ -2,8 +2,11 @@
   <div class="b_page">
     <ThePageHeader></ThePageHeader>
     <header class="b_page__header">
-      <FormAddColourVue></FormAddColourVue>
-      <SwatchList></SwatchList>
+      <div class="b_page__headerInner">
+        <FormAddColourVue></FormAddColourVue>
+        <SwatchList></SwatchList>
+        <PaletteControls></PaletteControls>
+      </div>
     </header>
     <main class="b_page__content">
       <CombinationsList></CombinationsList>
@@ -17,6 +20,7 @@ import ThePageHeader from "./components/ThePageHeader.vue";
 import FormAddColourVue from "@/components/FormAddColour.vue";
 import SwatchList from "@/components/SwatchList.vue";
 import CombinationsList from "./components/CombinationsList.vue";
+import PaletteControls from "./components/PaletteControls.vue";
 import { useColourStore } from "@/stores/colourStore";
 
 const colourStore = useColourStore();
@@ -46,6 +50,14 @@ body {
     background: var(--dt-ref-clr-grey-900);
     grid-column: 1;
     grid-row: 2;
+  }
+
+  &__headerInner {
+    position: sticky;
+    top: 0;
+    overflow: auto;
+    overscroll-behavior: unset;
+    max-height: calc(100vh - 20px);
   }
 
   &__content {

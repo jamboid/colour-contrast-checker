@@ -1,18 +1,16 @@
 <template>
-  <div>
-    <draggable
-      class="b_swatchList u_flow"
-      v-model="colours"
-      @start="drag = true"
-      @end="drag = false"
-      @change="listOrderUpdated"
-      item-key="element"
-    >
-      <template #item="{ element }">
-        <ColourSwatch :colourHex="element"></ColourSwatch>
-      </template>
-    </draggable>
-  </div>
+  <draggable
+    class="b_swatchList u_flow"
+    v-model="colours"
+    @start="drag = true"
+    @end="drag = false"
+    @change="listOrderUpdated"
+    item-key="element"
+  >
+    <template #item="{ element }">
+      <ColourSwatch :colourHex="element"></ColourSwatch>
+    </template>
+  </draggable>
 </template>
 
 <script setup>
@@ -37,10 +35,5 @@ const listOrderUpdated = function () {
 .b_swatchList {
   --flow-space: 10px;
   padding: var(--dt-sys-main-spacing);
-  position: sticky;
-  top: 0;
-  overflow: auto;
-  overscroll-behavior: unset;
-  max-height: calc(100vh - 20px);
 }
 </style>

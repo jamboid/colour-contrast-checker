@@ -100,8 +100,9 @@ export const useColourStore = defineStore("colourStore", () => {
   }
 
   function addColour(colourHexToAdd) {
-    if (!colourSwatches.value[colourHexToAdd]) {
-      colourSwatches.value.push(colourHexToAdd);
+    const formattedHex = "#" + colourHexToAdd;
+    if (!colourSwatches.value[formattedHex]) {
+      colourSwatches.value.push(formattedHex);
       this.updateURLData();
     }
   }
@@ -138,9 +139,14 @@ export const useColourStore = defineStore("colourStore", () => {
     const paramsInURL = new URLSearchParams(currURL.search);
     const currState = history.state;
 
-    window.console.log(currState);
-    paramsInURL.set("colours", colourStringForURL);
-    window.location.search = paramsInURL.toString();
+    const url = new URL(window.location);
+    url.searchParams.set("colours", colourStringForURL);
+    window.history.pushState(currState, "", url);
+  }
+
+  function clearPalette() {
+    this.colourSwatches = [];
+    this.updateURLData();
   }
 
   // Store API
@@ -155,6 +161,7 @@ export const useColourStore = defineStore("colourStore", () => {
     addColour,
     removeColour,
     updateURLData,
+    clearPalette,
   };
 });
 

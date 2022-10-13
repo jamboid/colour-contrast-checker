@@ -6,6 +6,7 @@
       </figure>
       <div class="b_combinations__introText u_prose u_measure">
         <h2>Pass</h2>
+        <p><strong>Contrast value above 4.5</strong></p>
         <p>
           Colour combinations meeting WCAG AA contrast standard for all text
           sizes.
@@ -26,7 +27,8 @@
         <IconResultPassLarge></IconResultPassLarge>
       </figure>
       <div class="b_combinations__introText u_prose u_measure">
-        <h2>Large Text Pass</h2>
+        <h2>Partial Pass</h2>
+        <p><strong>Contrast value between 3 and 4.5</strong></p>
         <p>
           Colour combinations meeting WCAG AA contrast standard for bold text
           above 18pt and all text above 21pt.
@@ -48,6 +50,7 @@
       </figure>
       <div class="b_combinations__introText u_prose u_measure">
         <h2>Fail</h2>
+        <p><strong>Contrast value less than 3</strong></p>
         <p>Colour combinations fail WCAG standard for colour contrast.</p>
       </div>
     </div>
@@ -113,6 +116,7 @@ const failList = computed(() => {
     flex-wrap: wrap;
     gap: 25px;
     align-items: flex-start;
+    padding-left: 55px;
     --flow-space: var(--dt-ref-size-l-xl);
   }
 }

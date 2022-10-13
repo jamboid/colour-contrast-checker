@@ -83,7 +83,18 @@ const validColour = computed(() => {
 const submitForm = async () => {
   v$.value.$validate(); // checks all inputs
   if (!v$.value.$error) {
-    colourStore.addColour(state.colourValue.toUpperCase());
+    let colourHex = state.colourValue;
+
+    if (colourHex.length === 3) {
+      colourHex = colourHex
+        .split("")
+        .map(function (hex) {
+          return hex + hex;
+        })
+        .join("");
+    }
+
+    colourStore.addColour(colourHex.toUpperCase());
     state.colourValue = "";
     state.formMode = "default";
   } else {

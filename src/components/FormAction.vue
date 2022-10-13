@@ -62,6 +62,7 @@ const isIconButton = computed(() => {
   $self: &;
 
   &__button {
+    font: var(--button-font);
     padding: var(--button-padding, 0.5em 1em);
     border: none;
     background: var(--button-background, var(--dt-ref-clr-blue-100));
