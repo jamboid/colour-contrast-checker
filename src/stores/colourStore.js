@@ -18,7 +18,7 @@ export const useColourStore = defineStore("colourStore", () => {
   });
 
   const uniqueColourCombinations = computed(() => {
-    const uniqueCombinations = [];
+    let uniqueCombinations = [];
     const colours = [...colourSwatches.value].sort();
     let a;
 
@@ -39,7 +39,11 @@ export const useColourStore = defineStore("colourStore", () => {
       });
     });
 
-    return uniqueCombinations.filter(((a = {}), (b) => !(a[b] = b in a)));
+    uniqueCombinations = uniqueCombinations.filter(
+      ((a = {}), (b) => !(a[b] = b in a))
+    );
+
+    return uniqueCombinations;
   });
 
   const passColourCombinations = computed(() => {
@@ -49,7 +53,6 @@ export const useColourStore = defineStore("colourStore", () => {
         combos.push(item);
       }
     });
-
     return combos;
   });
 

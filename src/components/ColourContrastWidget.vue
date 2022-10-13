@@ -4,14 +4,14 @@
       <div class="b_contrast__colour">
         <div
           class="b_contrast__sample--primary b_contrast__sample"
-          :style="primaryStyleObject"
+          :style="{ backgroundColor: primaryColour }"
         ></div>
         <h3 class="b_contrast__colourHex">{{ primaryColour }}</h3>
       </div>
       <div class="b_contrast__colour">
         <div
           class="b_contrast__sample--secondary b_contrast__sample"
-          :style="secondaryStyleObject"
+          :style="{ backgroundColor: contrastColour }"
         ></div>
         <h3 class="b_contrast__colourHex">{{ contrastColour }}</h3>
       </div>
@@ -51,14 +51,6 @@ const props = defineProps({
     type: Number,
     required: true,
   },
-});
-
-const primaryStyleObject = reactive({
-  backgroundColor: props.primaryColour,
-});
-
-const secondaryStyleObject = reactive({
-  backgroundColor: props.contrastColour,
 });
 
 const contrastRating = computed(() => {
