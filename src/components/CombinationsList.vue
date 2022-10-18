@@ -6,7 +6,7 @@
       </figure>
       <div class="b_combinations__introText u_prose u_measure">
         <h2>Pass</h2>
-        <p><strong>Contrast value above 4.5</strong></p>
+        <p><strong>Contrast value 4.5 or greater</strong></p>
         <p>
           Colour combinations meeting WCAG AA contrast standard for all text
           sizes.
@@ -28,7 +28,7 @@
       </figure>
       <div class="b_combinations__introText u_prose u_measure">
         <h2>Partial Pass</h2>
-        <p><strong>Contrast value between 3 and 4.5</strong></p>
+        <p><strong>Contrast value between 3 than 4.49</strong></p>
         <p>
           Colour combinations meeting WCAG AA contrast standard for bold text
           above 18pt and all text above 21pt.

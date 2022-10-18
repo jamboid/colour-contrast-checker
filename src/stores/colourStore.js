@@ -23,6 +23,7 @@ export const useColourStore = defineStore("colourStore", () => {
     let a;
 
     colours.forEach((firstColour) => {
+      window.console.log(firstColour);
       colours.forEach((secondColour) => {
         if (firstColour !== secondColour) {
           const colourPair = [];
@@ -39,6 +40,8 @@ export const useColourStore = defineStore("colourStore", () => {
       });
     });
 
+    window.console.log(uniqueCombinations);
+
     uniqueCombinations = uniqueCombinations.filter(
       ((a = {}), (b) => !(a[b] = b in a))
     );
@@ -49,7 +52,7 @@ export const useColourStore = defineStore("colourStore", () => {
   const passColourCombinations = computed(() => {
     const combos = [];
     uniqueColourCombinations.value.forEach((item) => {
-      if (item[2] > 4.5) {
+      if (item[2] >= 4.5) {
         combos.push(item);
       }
     });
