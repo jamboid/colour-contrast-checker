@@ -58,7 +58,13 @@ const props = defineProps({
 const emit = defineEmits(["update:modelValue"]);
 
 const updateValue = (event) => {
-  emit("update:modelValue", event.target.value);
+  let fieldText = event.target.value;
+
+  if (fieldText.charAt(0) === "#") {
+    fieldText = fieldText.substring(1);
+  }
+
+  emit("update:modelValue", fieldText);
 };
 
 const fieldStatus = computed(() => {
