@@ -4,6 +4,7 @@
     :class="{
       [`b_action--${modeClass}`]: buttonMode,
       [`b_action--icon`]: isIconButton,
+      [`b_action--disabled`]: isDisabled,
     }"
   >
     <button class="b_action__button" @click.prevent="onClick">
@@ -39,6 +40,11 @@ const props = defineProps({
     type: String,
     required: false,
   },
+  isDisabled: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
 });
 
 const modeClass = computed(() => {
@@ -63,7 +69,7 @@ const isIconButton = computed(() => {
 
   &__button {
     font: var(--button-font);
-    padding: var(--button-padding, 0.5em 1em);
+    padding: var(--button-padding, 0.6em 1em);
     border: none;
     background: var(--button-background, var(--dt-ref-clr-blue-100));
     color: var(--button-text, var(--dt-ref-clr-grey-1000));
@@ -71,13 +77,17 @@ const isIconButton = computed(() => {
     line-height: var(--button-lineheight, 1);
     transition: background-color var(--dt-sys-trans-short);
     border-radius: var(--dt-sys-border-rad-form-field);
-    width: var(--form-button-width, 30px);
-    height: var(--form-button-height, 30px);
+    width: var(--form-button-width, auto);
+    height: var(--form-button-height, auto);
+    white-space: nowrap;
+    transition: all var(--dt-sys-trans-short);
   }
 
   &--icon {
     --button-padding: 0.35em;
     --button-lineheight: 0;
+    --form-button-width: 30px;
+    --form-button-height: 30px;
 
     #{ $self }__button {
       display: flex;
@@ -91,6 +101,14 @@ const isIconButton = computed(() => {
 
     &:hover {
       --button-background: var(--dt-ref-clr-red-400);
+    }
+  }
+
+  &--disabled {
+    #{ $self }__button {
+      opacity: 0.5;
+      cursor: not-allowed;
+      --button-background: var(--dt-ref-clr-grey-800);
     }
   }
 }

@@ -1,13 +1,16 @@
 <template>
   <div class="b_page">
     <ThePageHeader></ThePageHeader>
-    <header class="b_page__header">
-      <div class="b_page__headerInner">
+    <section class="b_page__title">
+      <PaletteTitle></PaletteTitle>
+    </section>
+    <section class="b_page__list">
+      <div class="b_page__listInner">
         <FormAddColourVue></FormAddColourVue>
         <SwatchList></SwatchList>
         <PaletteControls></PaletteControls>
       </div>
-    </header>
+    </section>
     <main class="b_page__content">
       <CombinationsList></CombinationsList>
     </main>
@@ -20,6 +23,7 @@ import ThePageHeader from "./components/ThePageHeader.vue";
 import FormAddColourVue from "@/components/FormAddColour.vue";
 import SwatchList from "@/components/SwatchList.vue";
 import CombinationsList from "./components/CombinationsList.vue";
+import PaletteTitle from "./components/PaletteTitle.vue";
 import PaletteControls from "./components/PaletteControls.vue";
 import { useColourStore } from "@/stores/colourStore";
 
@@ -42,17 +46,23 @@ body {
 
 .b_page {
   display: grid;
-  grid-template-columns: 330px 1fr;
-  grid-template-rows: auto 1fr;
+  grid-template-columns: 380px 1fr;
+  grid-template-rows: auto auto 1fr;
   min-height: 100vh;
 
-  &__header {
-    background: var(--dt-ref-clr-grey-900);
-    grid-column: 1;
+  &__title {
+    //background: var(--dt-ref-clr-grey-900);
+    grid-column: 1 / -1;
     grid-row: 2;
   }
 
-  &__headerInner {
+  &__list {
+    background: var(--dt-ref-clr-grey-900);
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  &__listInner {
     position: sticky;
     top: 0;
     overflow: auto;
@@ -61,8 +71,9 @@ body {
   }
 
   &__content {
+    background: var(--dt-ref-clr-grey-900);
     grid-column: 2;
-    grid-row: 2;
+    grid-row: 3;
   }
 }
 </style>

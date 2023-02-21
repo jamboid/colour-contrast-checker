@@ -128,7 +128,7 @@ const ratingIcon = computed(() => {
     align-items: center;
     padding: 4px 12px 4px 4px;
     background: rgba(0, 0, 0, 0.1);
-    margin: 20px 20px 10px;
+    margin: 20px 0 10px;
     border-radius: 45px;
   }
 }

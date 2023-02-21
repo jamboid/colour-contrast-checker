@@ -109,9 +109,9 @@ const submitForm = async () => {
 
 <style lang="scss" scoped>
 .b_addColour {
-  padding: calc(var(--dt-sys-main-spacing) * 2) var(--dt-sys-main-spacing)
-    var(--dt-sys-main-spacing);
-  background: var(--dt-ref-clr-grey-900);
+  padding: calc(var(--dt-sys-main-spacing) * 1) var(--dt-sys-main-spacing)
+    calc(var(--dt-sys-main-spacing) / 2);
+  //background: var(--dt-ref-clr-grey-900);
 
   &__form {
     --form-field-border-clr: transparent;
@@ -131,7 +131,7 @@ const submitForm = async () => {
     align-items: center;
     gap: 10px;
     max-width: 400px;
-    margin-inline-end: auto;
+    margin: 0;
     border: 1px solid var(--dt-sys-clr-form-field-border);
     border-radius: var(--dt-sys-border-rad-form-field);
     background-color: var(--dt-ref-clr-grey-1000);

@@ -34,7 +34,7 @@ import GoodLogo from "@/components/icons/IconGoodLogo.vue";
 
   &__title {
     align-items: center;
-    padding: calc(var(--dt-sys-main-spacing) * 1.25) var(--dt-sys-main-spacing)
+    padding: calc(var(--dt-sys-main-spacing) / 1.5) var(--dt-sys-main-spacing)
       calc(var(--dt-sys-main-spacing) / 1.5);
   }
 
@@ -50,7 +50,7 @@ import GoodLogo from "@/components/icons/IconGoodLogo.vue";
     font-size: 24px;
   }
 
-  ::v-deep([fill]) {
+  :deep([fill]) {
     fill: var(--dt-ref-clr-grey-1000);
   }
 }

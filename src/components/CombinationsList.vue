@@ -98,7 +98,7 @@ const failList = computed(() => {
 
 <style lang="scss" scoped>
 .b_combinations {
-  padding: calc(var(--dt-sys-main-spacing) * 2);
+  padding: calc(var(--dt-sys-main-spacing) * 1);
 
   &__intro {
     display: flex;

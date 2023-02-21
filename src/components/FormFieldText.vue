@@ -6,7 +6,9 @@
       [`b_textfield--icon`]: icon,
     }"
   >
-    <label class="b_textfield__label" :for="id">{{ label }}</label>
+    <label class="b_textfield__label" :for="id" v-if="showLabel">{{
+      label
+    }}</label>
     <div class="b_textfield__field">
       <div class="b_textfield__fieldIcon" v-if="icon">
         <component :is="IconComponent"></component>
@@ -53,6 +55,11 @@ const props = defineProps({
     type: String,
     required: false,
   },
+  showLabel: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
 });
 
 const emit = defineEmits(["update:modelValue"]);
@@ -93,15 +100,23 @@ const IconComponent = computed(() => {
   display: grid;
   gap: 10px;
 
+  ::placeholder {
+    color: #999;
+  }
+
   &__label,
   &__field {
     display: block;
   }
 
   &__label {
-    font: var(--dt-sys-heading-700);
+    font: var(--text-label-size, var(--dt-sys-heading-700));
     color: var(--dt-ref-clr-grey-200);
     display: var(--form-field-label-display, block);
+
+    &:empty {
+      display: none;
+    }
   }
 
   &__field {
@@ -110,6 +125,7 @@ const IconComponent = computed(() => {
     border-radius: var(--dt-sys-border-rad-form-field);
     overflow: hidden;
     display: flex;
+    min-width: var(--form-field-min-width, auto);
   }
 
   &__fieldIcon,
@@ -128,8 +144,9 @@ const IconComponent = computed(() => {
   }
 
   &__input {
-    font: var(--dt-sys-text-code-400);
-    padding: 0.5em 0.85em;
+    background: var(--text-field-back);
+    font: var(--text-field-size, var(--dt-sys-text-code-400));
+    padding: var(--text-field-pd, 0.5em 0.85em);
     width: 100%;
     border: none;
     outline: none;
@@ -143,7 +160,7 @@ const IconComponent = computed(() => {
 
   &--icon {
     #{ $self }__fieldIcon {
-      ::v-deep [fill] {
+      :deep([fill]) {
         fill: var(--form-field-icon-clr, var(--dt-ref-clr-grey-100));
       }
     }

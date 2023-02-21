@@ -2,12 +2,13 @@ import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 import checkHexColourIsValid from "@/composables/checkHexColourIsValid";
 import getColoursFromURL from "@/composables/getColoursFromURL";
+import getTitleFromURL from "@/composables/getTitleFromURL";
 import contrastRatio from "@/composables/calculateColourContrast";
 
 export const useColourStore = defineStore("colourStore", () => {
   const colourSwatches = ref([]);
 
-  // Getters (Computed)
+  // Getters/Setters (Computed)
   const colours = computed({
     get() {
       return colourSwatches.value;
@@ -15,6 +16,27 @@ export const useColourStore = defineStore("colourStore", () => {
     set(value) {
       colourSwatches.value = value;
     },
+  });
+
+  const paletteTitle = ref("");
+
+  const listTitle = computed({
+    get() {
+      return paletteTitle.value;
+    },
+    set(value) {
+      paletteTitle.value = value;
+    },
+  });
+
+  const savedTitle = ref("");
+
+  const isTitleUpdated = computed(() => {
+    if (savedTitle.value === paletteTitle.value) {
+      return true;
+    }
+
+    return false;
   });
 
   const uniqueColourCombinations = computed(() => {
@@ -84,7 +106,7 @@ export const useColourStore = defineStore("colourStore", () => {
 
   // Functions (Actions)
 
-  function loadColoursFromQueryString() {
+  function loadPaletteFromQueryString() {
     this.colourSwatches = [];
 
     const coloursInURL = getColoursFromURL();
@@ -103,6 +125,15 @@ export const useColourStore = defineStore("colourStore", () => {
           window.console.log("invalid colour: ", formattedHex);
         }
       });
+    }
+
+    paletteTitle.value = "";
+    const titleInURL = getTitleFromURL();
+
+    if (titleInURL) {
+      window.console.log(titleInURL);
+      savedTitle.value = titleInURL;
+      paletteTitle.value = titleInURL;
     }
   }
 
@@ -126,7 +157,12 @@ export const useColourStore = defineStore("colourStore", () => {
     }
   }
 
-  function updateURLData() {
+  function updatePaletteTitle() {
+    this.savedTitle = paletteTitle.value;
+    this.updateURLData();
+  }
+
+  function formatPaletteQueryString() {
     const colourArray = colourSwatches;
     let colourStringForURL = "";
 
@@ -140,19 +176,28 @@ export const useColourStore = defineStore("colourStore", () => {
       colourStringForURL = colourStringForURL.slice(1);
     }
 
-    window.console.log(colourStringForURL);
+    return colourStringForURL;
+  }
+
+  function updateURLData() {
+    const coloursForURL = formatPaletteQueryString();
+    const paletteTitle = listTitle.value;
+
+    window.console.log(paletteTitle);
 
     const currURL = new URL(document.URL);
     const paramsInURL = new URLSearchParams(currURL.search);
     const currState = history.state;
 
     const url = new URL(window.location);
-    url.searchParams.set("colours", colourStringForURL);
+    url.searchParams.set("colours", coloursForURL);
+    url.searchParams.set("title", paletteTitle);
     window.history.pushState(currState, "", url);
   }
 
   function clearPalette() {
     this.colourSwatches = [];
+    this.listTitle = "";
     this.updateURLData();
   }
 
@@ -170,15 +215,20 @@ export const useColourStore = defineStore("colourStore", () => {
   return {
     colourSwatches,
     colours,
+    listTitle,
+    paletteTitle,
     uniqueColourCombinations,
     passColourCombinations,
     largePassColourCombinations,
     failColourCombinations,
-    loadColoursFromQueryString,
+    loadColoursFromQueryString: loadPaletteFromQueryString,
     addColour,
     removeColour,
     updateURLData,
     clearPalette,
+    updatePaletteTitle,
+    isTitleUpdated,
+    savedTitle,
   };
 });
 

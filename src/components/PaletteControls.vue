@@ -46,7 +46,7 @@ const paletteIsNotEmpty = computed(() => {
 
 <style lang="scss" scoped>
 .b_controls {
-  padding: var(--dt-sys-main-spacing);
+  padding: calc(var(--dt-sys-main-spacing) / 2) var(--dt-sys-main-spacing);
 
   &__clear {
     --form-button-width: auto;
