@@ -30,7 +30,7 @@ import { useColourStore } from "@/stores/colourStore";
 const colourStore = useColourStore();
 
 onMounted(() => {
-  colourStore.loadColoursFromQueryString();
+  colourStore.loadPaletteFromQueryString();
 });
 </script>
 
@@ -48,6 +48,7 @@ body {
   display: grid;
   grid-template-columns: 380px 1fr;
   grid-template-rows: auto auto 1fr;
+  gap: var(--dt-sys-size-m);
   min-height: 100vh;
 
   &__title {
@@ -60,6 +61,7 @@ body {
     background: var(--dt-ref-clr-grey-900);
     grid-column: 1;
     grid-row: 3;
+    border-radius: 0 var(--dt-sys-size-s) 0 0;
   }
 
   &__listInner {
@@ -74,6 +76,7 @@ body {
     background: var(--dt-ref-clr-grey-900);
     grid-column: 2;
     grid-row: 3;
+    border-radius: var(--dt-sys-size-s) 0 0 0;
   }
 }
 </style>

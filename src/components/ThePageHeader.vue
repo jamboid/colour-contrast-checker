@@ -5,7 +5,7 @@
         <figure class="b_pageHeader__logo u_resMedia">
           <GoodLogo></GoodLogo>
         </figure>
-        <h2 class="b_pageHeader__titleName">Colour Palette Checker</h2>
+        <h2 class="b_pageHeader__titleName">Colour Palette Contrast Checker</h2>
       </div>
     </div>
   </header>

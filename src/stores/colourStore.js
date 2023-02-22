@@ -6,9 +6,9 @@ import getTitleFromURL from "@/composables/getTitleFromURL";
 import contrastRatio from "@/composables/calculateColourContrast";
 
 export const useColourStore = defineStore("colourStore", () => {
+  // List of Colour Swatches
   const colourSwatches = ref([]);
 
-  // Getters/Setters (Computed)
   const colours = computed({
     get() {
       return colourSwatches.value;
@@ -18,6 +18,7 @@ export const useColourStore = defineStore("colourStore", () => {
     },
   });
 
+  // Palette Title
   const paletteTitle = ref("");
 
   const listTitle = computed({
@@ -45,7 +46,6 @@ export const useColourStore = defineStore("colourStore", () => {
     let a;
 
     colours.forEach((firstColour) => {
-      window.console.log(firstColour);
       colours.forEach((secondColour) => {
         if (firstColour !== secondColour) {
           const colourPair = [];
@@ -61,8 +61,6 @@ export const useColourStore = defineStore("colourStore", () => {
         }
       });
     });
-
-    window.console.log(uniqueCombinations);
 
     uniqueCombinations = uniqueCombinations.filter(
       ((a = {}), (b) => !(a[b] = b in a))
@@ -121,8 +119,6 @@ export const useColourStore = defineStore("colourStore", () => {
 
         if (checkHexColourIsValid(formattedHex)) {
           colourSwatches.value.push(formattedHex);
-        } else {
-          window.console.log("invalid colour: ", formattedHex);
         }
       });
     }
@@ -131,7 +127,6 @@ export const useColourStore = defineStore("colourStore", () => {
     const titleInURL = getTitleFromURL();
 
     if (titleInURL) {
-      window.console.log(titleInURL);
       savedTitle.value = titleInURL;
       paletteTitle.value = titleInURL;
     }
@@ -182,11 +177,6 @@ export const useColourStore = defineStore("colourStore", () => {
   function updateURLData() {
     const coloursForURL = formatPaletteQueryString();
     const paletteTitle = listTitle.value;
-
-    window.console.log(paletteTitle);
-
-    const currURL = new URL(document.URL);
-    const paramsInURL = new URLSearchParams(currURL.search);
     const currState = history.state;
 
     const url = new URL(window.location);
@@ -221,7 +211,7 @@ export const useColourStore = defineStore("colourStore", () => {
     passColourCombinations,
     largePassColourCombinations,
     failColourCombinations,
-    loadColoursFromQueryString: loadPaletteFromQueryString,
+    loadPaletteFromQueryString,
     addColour,
     removeColour,
     updateURLData,
@@ -231,131 +221,3 @@ export const useColourStore = defineStore("colourStore", () => {
     savedTitle,
   };
 });
-
-// export const useColourStore = defineStore({
-//   id: "colourStore",
-
-//   state: () => ({
-//     colourSwatches: [],
-//   }),
-
-//   getters: {
-//     colours: (state) => state.colourSwatches,
-//     uniqueColourCombinations: (state) => {
-//       const uniqueCombinations = [];
-//       const colours = [...state.colourSwatches].sort();
-//       let a;
-
-//       colours.forEach((firstColour) => {
-//         colours.forEach((secondColour) => {
-//           if (firstColour !== secondColour) {
-//             const colourPair = [];
-//             colourPair.push(firstColour);
-//             colourPair.push(secondColour);
-//             colourPair.sort();
-
-//             colourPair.push(
-//               Math.round(contrastRatio(firstColour, secondColour) * 100) / 100
-//             );
-
-//             uniqueCombinations.push(colourPair);
-//           }
-//         });
-//       });
-
-//       return uniqueCombinations.filter(((a = {}), (b) => !(a[b] = b in a)));
-//     },
-//     passColourCombinations() {
-//       const combos = [];
-//       this.uniqueColourCombinations.forEach((item) => {
-//         if (item[2] > 4.5) {
-//           combos.push(item);
-//         }
-//       });
-
-//       return combos;
-//     },
-//     largePassColourCombinations() {
-//       const combos = [];
-//       this.uniqueColourCombinations.forEach((item) => {
-//         if (item[2] >= 3 && item[2] < 4.5) {
-//           combos.push(item);
-//         }
-//       });
-
-//       return combos;
-//     },
-//     failColourCombinations() {
-//       const combos = [];
-//       this.uniqueColourCombinations.forEach((item) => {
-//         if (item[2] < 3) {
-//           combos.push(item);
-//         }
-//       });
-
-//       return combos;
-//     },
-//   },
-
-//   actions: {
-//     loadColoursFromQueryString() {
-//       this.colourSwatches = [];
-
-//       const coloursInURL = getColoursFromURL();
-
-//       if (coloursInURL) {
-//         // Separate values by comma
-//         const coloursToAdd = coloursInURL.split("-");
-//         // Format each value to a hex colour, check that it matches hex regex
-//         // and push to state
-//         coloursToAdd.forEach((element) => {
-//           const formattedHex = "#" + element;
-
-//           if (checkHexColourIsValid(formattedHex)) {
-//             this.colourSwatches.push(formattedHex);
-//           } else {
-//             window.console.log("invalid colour: ", formattedHex);
-//           }
-//         });
-//       }
-//     },
-//     addColour(colourHexToAdd) {
-//       if (!this.colourSwatches[colourHexToAdd]) {
-//         this.colourSwatches.push(colourHexToAdd);
-//         this.updateURLData();
-//       }
-//     },
-//     removeColour(colourHexToRemove) {
-//       const colourArray = this.colourSwatches;
-
-//       if (colourArray.indexOf(colourHexToRemove) > -1) {
-//         const indexOfColour = colourArray.indexOf(colourHexToRemove);
-//         colourArray.splice(indexOfColour, 1);
-//         this.colourSwatches = colourArray;
-
-//         this.updateURLData();
-//       }
-//     },
-//     updateURLData() {
-//       const colourArray = this.colourSwatches;
-//       let colourStringForURL = "";
-
-//       colourArray.forEach((element) => {
-//         const formattedColour = element.replace("#", "");
-
-//         colourStringForURL = colourStringForURL + "-" + formattedColour;
-//       });
-
-//       if (colourStringForURL.charAt(0) === "-") {
-//         colourStringForURL = colourStringForURL.slice(1);
-//       }
-
-//       window.console.log(colourStringForURL);
-
-//       const currURL = new URL(document.URL);
-//       const paramsInURL = new URLSearchParams(currURL.search);
-//       paramsInURL.set("colours", colourStringForURL);
-//       window.location.search = paramsInURL.toString();
-//     },
-//   },
-// });

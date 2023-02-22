@@ -6,7 +6,7 @@ $size-xl: 56px;
 
 :root {
   --dt-ref-size-small:0.5rem;
-  --dt-ref-size-medium: 1rem;
+  --dt-ref-size-medium: #{$size-m};
   --dt-ref-size-large: 2rem;
   --dt-ref-size-xl: #{$size-xl};
   --dt-ref-size-xs-l: #{clamped($size-xs,$size-l)};
