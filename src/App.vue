@@ -50,6 +50,7 @@ body {
   grid-template-rows: auto auto 1fr;
   gap: var(--dt-sys-size-m);
   min-height: 100vh;
+  padding-block-end: var(--dt-sys-size-m);
 
   &__title {
     //background: var(--dt-ref-clr-grey-900);
@@ -62,13 +63,14 @@ body {
     grid-column: 1;
     grid-row: 3;
     border-radius: 0 var(--dt-sys-size-s) 0 0;
+    position: relative;
+    z-index: 1000;
   }
 
   &__listInner {
     position: sticky;
     top: 0;
-    overflow: auto;
-    overscroll-behavior: unset;
+    overflow-y: auto;
     max-height: calc(100vh - 20px);
   }
 

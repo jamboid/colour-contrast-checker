@@ -55,8 +55,8 @@ const submitForm = async () => {
   --text-field-pd: 0;
   --form-field-border-clr: transparent;
   --form-field-min-width: 400px;
-  --button-font: var(--dt-sys-body-300);
-  --button-padding: 0.4em 0.65em;
+  --formAction-font: var(--dt-sys-body-300);
+  --formAction-padding: 0.4em 0.65em;
 
   display: flex;
   flex-direction: column;

@@ -135,7 +135,7 @@ const submitForm = async () => {
     border: 1px solid var(--dt-sys-clr-form-field-border);
     border-radius: var(--dt-sys-border-rad-form-field);
     background-color: var(--dt-ref-clr-grey-1000);
-    padding: 1px 5px;
+    padding: 4px 5px;
   }
 
   &__preview {

@@ -68,47 +68,64 @@ const isIconButton = computed(() => {
   $self: &;
 
   &__button {
-    font: var(--button-font);
-    padding: var(--button-padding, 0.6em 1em);
+    font: var(--formAction-font);
+    padding: var(--formAction-padding, 0.6em 1em);
     border: none;
-    background: var(--button-background, var(--dt-ref-clr-blue-100));
-    color: var(--button-text, var(--dt-ref-clr-grey-1000));
+    background: var(--formAction-background, var(--dt-ref-clr-blue-100));
+    color: var(--formAction-text, var(--dt-ref-clr-grey-1000));
     cursor: pointer;
-    line-height: var(--button-lineheight, 1);
+    line-height: var(--formAction-lineheight, 1);
     transition: background-color var(--dt-sys-trans-short);
-    border-radius: var(--dt-sys-border-rad-form-field);
-    width: var(--form-button-width, auto);
-    height: var(--form-button-height, auto);
+    border-radius: var(
+      --formAction-bordrad,
+      var(--dt-sys-border-rad-form-field)
+    );
+    width: var(--formAction-width, auto);
+    height: var(--formAction-height, auto);
     white-space: nowrap;
     transition: all var(--dt-sys-trans-short);
+
+    &:is(:hover, :active) {
+      background: var(--formAction-background-hov, var(--dt-ref-clr-blue-100));
+    }
   }
 
   &--icon {
-    --button-padding: 0.35em;
-    --button-lineheight: 0;
-    --form-button-width: 30px;
-    --form-button-height: 30px;
+    --formAction-padding: 0.35em;
+    --formAction-lineheight: 0;
+    --formAction-width: 34px;
+    --formAction-height: 34px;
 
     #{ $self }__button {
       display: flex;
       justify-content: center;
       align-items: center;
+
+      ::deep(svg) {
+        max-height: 24px;
+      }
     }
   }
 
-  &--delete {
-    --button-background: var(--dt-ref-clr-grey-800);
+  &--negative {
+    //--formAction-background: var(--dt-ref-clr-grey-800);
+    --formAction-background-hov: var(--dt-ref-clr-red-400);
+  }
 
-    &:hover {
-      --button-background: var(--dt-ref-clr-red-400);
-    }
+  &--positive {
+    //--formAction-background: var(--dt-ref-clr-grey-800);
+    --formAction-background-hov: var(--dt-ref-clr-blue-100);
+  }
+
+  &--actionToggle {
+    --formAction-background: transparent;
   }
 
   &--disabled {
     #{ $self }__button {
       opacity: 0.5;
       cursor: not-allowed;
-      --button-background: var(--dt-ref-clr-grey-800);
+      --formAction-background: var(--dt-ref-clr-grey-800);
     }
   }
 }

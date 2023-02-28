@@ -3,13 +3,18 @@ import { defineStore } from "pinia";
 import checkHexColourIsValid from "@/composables/checkHexColourIsValid";
 import getColoursFromURL from "@/composables/getColoursFromURL";
 import getTitleFromURL from "@/composables/getTitleFromURL";
+import getFocusColourFromURL from "@/composables/getFocusColourFromURL";
 import contrastRatio from "@/composables/calculateColourContrast";
 
 export const useColourStore = defineStore("colourStore", () => {
-  // List of Colour Swatches
+  /* 
+  Colour Swatches
+  ===============
+  */
+
   const colourSwatches = ref([]);
 
-  const colours = computed({
+  const coloursGetSet = computed({
     get() {
       return colourSwatches.value;
     },
@@ -18,40 +23,42 @@ export const useColourStore = defineStore("colourStore", () => {
     },
   });
 
-  // Palette Title
-  const paletteTitle = ref("");
+  const focusColour = ref("");
 
-  const listTitle = computed({
+  const focusColourGetSet = computed({
     get() {
-      return paletteTitle.value;
+      return focusColour.value;
     },
     set(value) {
-      paletteTitle.value = value;
+      focusColour.value = value;
+      updateURLData();
     },
-  });
-
-  const savedTitle = ref("");
-
-  const isTitleUpdated = computed(() => {
-    if (savedTitle.value === paletteTitle.value) {
-      return true;
-    }
-
-    return false;
   });
 
   const uniqueColourCombinations = computed(() => {
     let uniqueCombinations = [];
     const colours = [...colourSwatches.value].sort();
+
+    let primaryColourSet = [];
+
+    if (focusColour.value !== "") {
+      primaryColourSet.push(focusColour.value);
+    } else {
+      primaryColourSet = colours;
+    }
+
     let a;
 
-    colours.forEach((firstColour) => {
+    primaryColourSet.forEach((firstColour) => {
       colours.forEach((secondColour) => {
         if (firstColour !== secondColour) {
           const colourPair = [];
           colourPair.push(firstColour);
           colourPair.push(secondColour);
-          colourPair.sort();
+
+          if (focusColour.value === "") {
+            colourPair.sort();
+          }
 
           colourPair.push(
             Math.round(contrastRatio(firstColour, secondColour) * 100) / 100
@@ -102,6 +109,32 @@ export const useColourStore = defineStore("colourStore", () => {
     return combos.sort(compare);
   });
 
+  /* 
+  Palette Title
+  ===============
+  */
+
+  const paletteTitle = ref("");
+
+  const paletteTitleGetSet = computed({
+    get() {
+      return paletteTitle.value;
+    },
+    set(value) {
+      paletteTitle.value = value;
+    },
+  });
+
+  const savedTitle = ref("");
+
+  const isTitleUpdated = computed(() => {
+    if (savedTitle.value === paletteTitle.value) {
+      return true;
+    }
+
+    return false;
+  });
+
   // Functions (Actions)
 
   function loadPaletteFromQueryString() {
@@ -129,6 +162,12 @@ export const useColourStore = defineStore("colourStore", () => {
     if (titleInURL) {
       savedTitle.value = titleInURL;
       paletteTitle.value = titleInURL;
+    }
+
+    const focusColourInURL = getFocusColourFromURL();
+
+    if (focusColourInURL) {
+      focusColourGetSet.value = focusColourInURL;
     }
   }
 
@@ -176,18 +215,21 @@ export const useColourStore = defineStore("colourStore", () => {
 
   function updateURLData() {
     const coloursForURL = formatPaletteQueryString();
-    const paletteTitle = listTitle.value;
+    const paletteTitle = paletteTitleGetSet.value;
+    const focusColour = focusColourGetSet.value.replace("#", "");
     const currState = history.state;
 
     const url = new URL(window.location);
     url.searchParams.set("colours", coloursForURL);
     url.searchParams.set("title", paletteTitle);
+    url.searchParams.set("focus", focusColour);
     window.history.pushState(currState, "", url);
   }
 
   function clearPalette() {
     this.colourSwatches = [];
     this.listTitle = "";
+    this.focusColourGetSet = "";
     this.updateURLData();
   }
 
@@ -204,8 +246,9 @@ export const useColourStore = defineStore("colourStore", () => {
   // Store API
   return {
     colourSwatches,
-    colours,
-    listTitle,
+    colours: coloursGetSet,
+    listTitle: paletteTitleGetSet,
+    focusColourGetSet,
     paletteTitle,
     uniqueColourCombinations,
     passColourCombinations,

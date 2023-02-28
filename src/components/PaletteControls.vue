@@ -51,9 +51,10 @@ const paletteIsNotEmpty = computed(() => {
   &__clear {
     --form-button-width: auto;
     --form-button-height: auto;
-    --button-background: var(--dt-ref-clr-red-400);
-    --button-padding: 0.4em 0.65em;
-    --button-font: var(--dt-sys-body-300);
+    --formAction-background: var(--dt-ref-clr-red-400);
+    --formAction-background-hov: var(--dt-ref-clr-red-300);
+    --formAction-padding: 0.4em 0.65em;
+    --formAction-font: var(--dt-sys-body-300);
   }
 }
 </style>

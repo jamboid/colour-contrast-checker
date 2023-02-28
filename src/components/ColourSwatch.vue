@@ -1,10 +1,10 @@
 <template>
-  <div class="b_swatch">
+  <div class="b_swatch" :class="{ focus: isFocus }">
     <div class="b_swatch__colour">
       <div
-        class="b_swatch__sample"
+        class="b_swatch__sample u_pseudo"
         :style="{ backgroundColor: colourHex }"
-        @click.prevent="copyToClipboard"
+        :onClick.prevent="setFocus"
       >
         <Transition>
           <div v-if="state.isCopying" class="b_swatch__copyMessage">
@@ -15,15 +15,23 @@
     </div>
     <div class="b_swatch__details">
       <p>{{ colourHex }}</p>
-      <form>
+      <div class="b_swatch__toolbar">
+        <FormAction
+          :onClick.prevent="copyToClipboard"
+          buttonLabel="Copy"
+          buttonMode="positive"
+          buttonType="icon"
+          ><IconCopy></IconCopy
+        ></FormAction>
+
         <FormAction
           :onClick.prevent="deleteColour"
           buttonLabel="Delete"
-          buttonMode="delete"
+          buttonMode="negative"
           buttonType="icon"
-          ><FieldIconCross></FieldIconCross
+          ><IconDustbin></IconDustbin
         ></FormAction>
-      </form>
+      </div>
     </div>
   </div>
 </template>
@@ -32,7 +40,8 @@
 // Imports
 import { reactive, computed, ref } from "vue";
 import FormAction from "@/components/FormAction.vue";
-import FieldIconCross from "@/components/icons/FieldIconCross.vue";
+import IconDustbin from "@/components/icons/IconDustbin.vue";
+import IconCopy from "@/components/icons/IconCopy.vue";
 import { useColourStore } from "@/stores/colourStore";
 
 const colourStore = useColourStore();
@@ -41,6 +50,7 @@ const colourStore = useColourStore();
 const state = reactive({
   isEditing: false,
   isCopying: false,
+  isFocus: false,
 });
 
 const props = defineProps({
@@ -67,15 +77,37 @@ const copyToClipboard = async () => {
     console.error("Failed to copy: ", err);
   }
 };
+
+const isFocus = computed(() => {
+  const FOCUS_COLOUR = colourStore.focusColourGetSet;
+
+  if (FOCUS_COLOUR === props.colourHex) {
+    return true;
+  } else {
+    return false;
+  }
+});
+
+const setFocus = async () => {
+  if (isFocus.value) {
+    colourStore.focusColourGetSet = "";
+  } else {
+    colourStore.focusColourGetSet = props.colourHex;
+  }
+};
 </script>
 
 <style lang="scss" scoped>
 .b_swatch {
+  $self: &;
+
+  --formAction-background: var(--dt-ref-clr-grey-800);
+
   display: grid;
   grid-template-columns: 40px 1fr;
-  gap: 10px;
+  gap: 12px;
   padding: 8px;
-  background: var(--dt-ref-clr-grey-1000);
+  background: var(--swatch-back, var(--dt-ref-clr-grey-1000));
   box-shadow: var(--dt-sys-shadow-card);
   border-radius: var(--dt-sys-border-rad-small);
   cursor: move;
@@ -86,15 +118,34 @@ const copyToClipboard = async () => {
   }
 
   &__sample {
-    width: 40px;
-    height: 40px;
+    width: var(--swatch-sample-size, 40px);
+    height: var(--swatch-sample-size, 40px);
     display: inline-block;
     grid-column: 1;
-    align-self: stretch;
-    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+    align-self: center;
+    box-shadow: var(--swatch-sample-shadow);
+    border: var(--swatch-sample-border-width, 1px) solid
+      var(--swatch-sample-border-clr, rgba(0, 0, 0, 0.2));
     border-radius: 50%;
-    cursor: copy;
     position: relative;
+    transform: scale(var(--swatch-sample-scale, 1))
+      translate(var(--swatch-sample-translate, 0));
+    z-index: 10;
+
+    &:is(:hover, :focus) {
+      cursor: zoom-in;
+    }
+
+    &:before {
+      width: 5px;
+      height: 16px;
+      background: var(--swatch-sample-border-clr);
+      bottom: 0;
+      right: 0;
+      transform: rotate(-45deg) translate(-3px, 9px);
+      z-index: -1;
+      border-radius: 3px;
+    }
   }
 
   &__copyMessage {
@@ -126,8 +177,36 @@ const copyToClipboard = async () => {
     grid-column: 2;
 
     p {
+      color: var(--swatch-text);
       font: var(--dt-sys-text-code-400);
     }
+  }
+
+  &__toolbar {
+    display: flex;
+    grid-gap: 5px;
+    opacity: 0;
+    transition: opacity var(--dt-sys-trans-short);
+
+    --b-icon-max-height: 24px;
+  }
+
+  &:is(:hover, :focus) {
+    #{ $self }__toolbar {
+      opacity: 1;
+    }
+  }
+
+  &.focus {
+    --swatch-text: var(--dt-ref-clr-grey-1000);
+    --swatch-back: var(--dt-ref-clr-grey-200);
+    --swatch-sample-border-clr: var(--dt-ref-clr-grey-1000);
+    --swatch-sample-translate: -3px, -3px;
+    --swatch-sample-scale: 0.9;
+    --swatch-sample-border-width: 3px;
+    --formAction-background: var(--dt-ref-clr-grey-300);
+    --swatch-sample-shadow: inset 0 0 0 var(--swatch-shadow-thickness, 3px)
+      var(--swatch-back);
   }
 }
 </style>
