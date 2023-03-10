@@ -130,6 +130,7 @@ const ratingIcon = computed(() => {
     background: rgba(0, 0, 0, 0.1);
     margin: 20px 0 10px;
     border-radius: 45px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
   }
 }
 </style>

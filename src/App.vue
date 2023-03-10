@@ -2,6 +2,7 @@
   <div class="b_page">
     <ThePageHeader></ThePageHeader>
     <section class="b_page__title">
+      <PaletteSelector></PaletteSelector>
       <PaletteTitle></PaletteTitle>
     </section>
     <section class="b_page__list">
@@ -21,6 +22,7 @@
 import { onMounted } from "vue";
 import ThePageHeader from "./components/ThePageHeader.vue";
 import FormAddColourVue from "@/components/FormAddColour.vue";
+import PaletteSelector from "@/components/PaletteSelector.vue";
 import SwatchList from "@/components/SwatchList.vue";
 import CombinationsList from "./components/CombinationsList.vue";
 import PaletteTitle from "./components/PaletteTitle.vue";
@@ -31,6 +33,7 @@ const colourStore = useColourStore();
 
 onMounted(() => {
   colourStore.loadPaletteFromQueryString();
+  colourStore.loadPalettesFromLocalStorage();
 });
 </script>
 
@@ -46,7 +49,7 @@ body {
 
 .b_page {
   display: grid;
-  grid-template-columns: 380px 1fr;
+  grid-template-columns: 340px 1fr;
   grid-template-rows: auto auto 1fr;
   gap: var(--dt-sys-size-m);
   min-height: 100vh;
@@ -56,6 +59,11 @@ body {
     //background: var(--dt-ref-clr-grey-900);
     grid-column: 1 / -1;
     grid-row: 2;
+    display: flex;
+    justify-content: space-between;
+    gap: var(--dt-ref-size-large);
+    align-items: center;
+    padding: calc(var(--dt-sys-main-spacing) / 2) var(--dt-sys-main-spacing);
   }
 
   &__list {

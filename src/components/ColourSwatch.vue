@@ -106,7 +106,7 @@ const setFocus = async () => {
   display: grid;
   grid-template-columns: 40px 1fr;
   gap: 12px;
-  padding: 8px;
+  padding: 8px 12px 8px 8px;
   background: var(--swatch-back, var(--dt-ref-clr-grey-1000));
   box-shadow: var(--dt-sys-shadow-card);
   border-radius: var(--dt-sys-border-rad-small);
@@ -131,10 +131,7 @@ const setFocus = async () => {
     transform: scale(var(--swatch-sample-scale, 1))
       translate(var(--swatch-sample-translate, 0));
     z-index: 10;
-
-    &:is(:hover, :focus) {
-      cursor: zoom-in;
-    }
+    cursor: var(--swatch-sample-cursor, zoom-in);
 
     &:before {
       width: 5px;
@@ -207,6 +204,7 @@ const setFocus = async () => {
     --formAction-background: var(--dt-ref-clr-grey-300);
     --swatch-sample-shadow: inset 0 0 0 var(--swatch-shadow-thickness, 3px)
       var(--swatch-back);
+    --swatch-sample-cursor: zoom-out;
   }
 }
 </style>

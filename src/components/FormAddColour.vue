@@ -10,6 +10,7 @@
           icon="hex"
           :status="formMode"
           v-model="state.colourValue"
+          mode="hex"
         ></FormFieldText>
         <div
           class="b_addColour__preview"
@@ -126,14 +127,13 @@ const submitForm = async () => {
 
   &__fieldset {
     --flow-space: 7px;
-
     display: flex;
     align-items: center;
     gap: 10px;
     max-width: 400px;
     margin: 0;
     border: 1px solid var(--dt-sys-clr-form-field-border);
-    border-radius: var(--dt-sys-border-rad-form-field);
+    border-radius: var(--dt-sys-border-rad-outer);
     background-color: var(--dt-ref-clr-grey-1000);
     padding: 4px 5px;
   }

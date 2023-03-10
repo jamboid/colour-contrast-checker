@@ -5,10 +5,12 @@
         placeholder="Add a title for your colour palette..."
         v-model="colourStore.listTitle"
         id="titleField"
-        label="Palette title"
+        label="This palette is"
+        showLabel="true"
+        @keyup="submitForm"
       ></FormFieldText>
     </div>
-    <div class="b_titleForm__action">
+    <!-- <div class="b_titleForm__action">
       <FormAction
         buttonLabel="Update title"
         :onClick="submitForm"
@@ -16,7 +18,7 @@
         buttonMode="submit"
         :isDisabled="formDisabled"
       ></FormAction>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -24,7 +26,7 @@
 // Imports
 import { reactive, computed, ref, onMounted } from "vue";
 import FormFieldText from "@/components/FormFieldText.vue";
-import FormAction from "@/components/FormAction.vue";
+//import FormAction from "@/components/FormAction.vue";
 
 import { useColourStore } from "@/stores/colourStore";
 const colourStore = useColourStore();

@@ -5,7 +5,7 @@
         :onClick="clearPalette"
         buttonLabel="Clear palette"
         :status="formMode"
-        buttonMode="submit"
+        buttonMode="negative"
       ></FormAction>
     </div>
   </div>

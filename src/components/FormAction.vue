@@ -5,11 +5,14 @@
       [`b_action--${modeClass}`]: buttonMode,
       [`b_action--icon`]: isIconButton,
       [`b_action--disabled`]: isDisabled,
+      [`b_action--iconFirst`]: iconFirst,
     }"
   >
     <button class="b_action__button" @click.prevent="onClick">
-      <slot v-if="isIconButton"></slot>
-      <span v-if="!isIconButton">{{ buttonLabel }}</span>
+      <span class="b_action__label" v-if="hasVisibleLabel">{{
+        buttonLabel
+      }}</span>
+      <slot></slot>
     </button>
   </div>
 </template>
@@ -45,6 +48,10 @@ const props = defineProps({
     required: false,
     default: false,
   },
+  iconFirst: {
+    type: Boolean,
+    required: false,
+  },
 });
 
 const modeClass = computed(() => {
@@ -53,6 +60,22 @@ const modeClass = computed(() => {
 
 const isIconButton = computed(() => {
   if (props.buttonType === "icon") {
+    return true;
+  }
+
+  return false;
+});
+
+const isLargeIconButton = computed(() => {
+  if (props.buttonType === "largeIcon") {
+    return true;
+  }
+
+  return false;
+});
+
+const hasVisibleLabel = computed(() => {
+  if (props.buttonType !== "icon") {
     return true;
   }
 
@@ -71,23 +94,31 @@ const isIconButton = computed(() => {
     font: var(--formAction-font);
     padding: var(--formAction-padding, 0.6em 1em);
     border: none;
-    background: var(--formAction-background, var(--dt-ref-clr-blue-100));
+    background: var(--formAction-background, var(--dt-ref-clr-blue-200));
     color: var(--formAction-text, var(--dt-ref-clr-grey-1000));
     cursor: pointer;
     line-height: var(--formAction-lineheight, 1);
     transition: background-color var(--dt-sys-trans-short);
-    border-radius: var(
-      --formAction-bordrad,
-      var(--dt-sys-border-rad-form-field)
-    );
+    border-radius: var(--formAction-bordrad, var(--dt-sys-border-rad-inner));
     width: var(--formAction-width, auto);
     height: var(--formAction-height, auto);
     white-space: nowrap;
     transition: all var(--dt-sys-trans-short);
+    display: flex;
+    align-items: center;
+    gap: 12px;
 
-    &:is(:hover, :active) {
+    &:is(:hover) {
       background: var(--formAction-background-hov, var(--dt-ref-clr-blue-100));
     }
+
+    ::deep(svg) {
+      max-height: var(--button-icon-max-height, 24px);
+    }
+  }
+
+  &__label {
+    font-weight: 500;
   }
 
   &--icon {
@@ -95,25 +126,23 @@ const isIconButton = computed(() => {
     --formAction-lineheight: 0;
     --formAction-width: 34px;
     --formAction-height: 34px;
+    --formAction-padding: 4px;
 
     #{ $self }__button {
       display: flex;
       justify-content: center;
       align-items: center;
-
-      ::deep(svg) {
-        max-height: 24px;
-      }
     }
   }
 
   &--negative {
-    //--formAction-background: var(--dt-ref-clr-grey-800);
-    --formAction-background-hov: var(--dt-ref-clr-red-400);
+    --formAction-background: var(--dt-ref-clr-red-400);
+    --formAction-background-hov: var(--dt-ref-clr-red-300);
   }
 
-  &--positive {
-    //--formAction-background: var(--dt-ref-clr-grey-800);
+  &--positive,
+  &--submit {
+    --formAction-background: var(--dt-ref-clr-blue-200);
     --formAction-background-hov: var(--dt-ref-clr-blue-100);
   }
 
@@ -126,6 +155,16 @@ const isIconButton = computed(() => {
       opacity: 0.5;
       cursor: not-allowed;
       --formAction-background: var(--dt-ref-clr-grey-800);
+    }
+  }
+
+  &--iconFirst {
+    span {
+      order: 3;
+    }
+
+    #{ $self }__label {
+      order: 3;
     }
   }
 }

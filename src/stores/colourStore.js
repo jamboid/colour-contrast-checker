@@ -5,8 +5,41 @@ import getColoursFromURL from "@/composables/getColoursFromURL";
 import getTitleFromURL from "@/composables/getTitleFromURL";
 import getFocusColourFromURL from "@/composables/getFocusColourFromURL";
 import contrastRatio from "@/composables/calculateColourContrast";
+import SearchArrayByItemPropertyValue from "@/composables/SearchArrayByItemPropertyValue";
 
 export const useColourStore = defineStore("colourStore", () => {
+  /*
+  Local Storage Set of Palettes
+
+  These are written to the localStorage as:
+
+  "palettes"
+  "paletteIDCounter"
+
+  */
+
+  const palettes = ref([]);
+
+  const palettesGetSet = computed({
+    get() {
+      return palettes.value;
+    },
+    set(value) {
+      palettes.value = value;
+    },
+  });
+
+  const paletteIDCounter = ref(0);
+
+  const paletteIDCounterGetSet = computed({
+    get() {
+      return paletteIDCounter.value;
+    },
+    set(value) {
+      paletteIDCounter.value = value;
+    },
+  });
+
   /* 
   Colour Swatches
   ===============
@@ -135,6 +168,14 @@ export const useColourStore = defineStore("colourStore", () => {
     return false;
   });
 
+  const paletteCanBeArchived = computed(() => {
+    if (paletteTitle.value !== "" && colourSwatches.value.length > 0) {
+      return true;
+    }
+
+    return false;
+  });
+
   // Functions (Actions)
 
   function loadPaletteFromQueryString() {
@@ -171,10 +212,70 @@ export const useColourStore = defineStore("colourStore", () => {
     }
   }
 
+  function loadLocalPalette(id) {
+    let localPalette = SearchArrayByItemPropertyValue(id, "id", palettes.value);
+
+    let newColours = Object.assign([], localPalette.colours);
+    let newTitle = localPalette.title;
+
+    colourSwatches.value = newColours;
+    paletteTitle.value = newTitle;
+    savedTitle.value = newTitle;
+    focusColour.value = "";
+
+    updateURLData();
+  }
+
+  function deleteLocalPalette(id) {
+    let localPalette = SearchArrayByItemPropertyValue(id, "id", palettes.value);
+
+    let indexOfPaletteToDelete = palettes.value.indexOf(localPalette);
+
+    if (indexOfPaletteToDelete === 0) {
+      palettes.value.shift();
+    } else {
+      palettes.value.splice(indexOfPaletteToDelete, indexOfPaletteToDelete);
+    }
+
+    updateLocalStorage();
+  }
+
+  function loadPalettesFromLocalStorage() {
+    if (localStorage.getItem("palettes") && localStorage.getItem("idCounter")) {
+      palettes.value = JSON.parse(localStorage.getItem("palettes"));
+      paletteIDCounter.value = localStorage.getItem("idCounter");
+    }
+  }
+
+  function addPaletteToLocalStorage() {
+    window.console.log(palettes);
+    // Needs a title
+    if (paletteTitle.value !== "") {
+      let savedPalette = {};
+
+      let newColours = Object.assign([], colourSwatches.value);
+
+      savedPalette.colours = newColours;
+      savedPalette.id = paletteIDCounter.value;
+      savedPalette.title = paletteTitle.value;
+
+      palettes.value.unshift(savedPalette);
+
+      paletteIDCounter.value++;
+
+      updateLocalStorage();
+    }
+  }
+
+  function updateLocalStorage() {
+    localStorage.setItem("palettes", JSON.stringify(palettes.value));
+    localStorage.setItem("idCounter", paletteIDCounter.value);
+  }
+
   function addColour(colourHexToAdd) {
     const formattedHex = "#" + colourHexToAdd;
     if (!colourSwatches.value[formattedHex]) {
-      colourSwatches.value.push(formattedHex);
+      colourSwatches.value.unshift(formattedHex);
       this.updateURLData();
     }
   }
@@ -186,7 +287,9 @@ export const useColourStore = defineStore("colourStore", () => {
       const indexOfColour = colourArray.value.indexOf(colourHexToRemove);
       colourArray.value.splice(indexOfColour, 1);
       this.colourSwatches = colourArray;
-
+      if (colourHexToRemove === focusColourGetSet.value) {
+        focusColourGetSet.value = "";
+      }
       this.updateURLData();
     }
   }
@@ -245,6 +348,8 @@ export const useColourStore = defineStore("colourStore", () => {
 
   // Store API
   return {
+    palettesGetSet,
+    paletteIDCounterGetSet,
     colourSwatches,
     colours: coloursGetSet,
     listTitle: paletteTitleGetSet,
@@ -255,12 +360,18 @@ export const useColourStore = defineStore("colourStore", () => {
     largePassColourCombinations,
     failColourCombinations,
     loadPaletteFromQueryString,
+    addPaletteToLocalStorage,
     addColour,
     removeColour,
     updateURLData,
+    updateLocalStorage,
     clearPalette,
     updatePaletteTitle,
     isTitleUpdated,
     savedTitle,
+    loadPalettesFromLocalStorage,
+    loadLocalPalette,
+    deleteLocalPalette,
+    paletteCanBeArchived,
   };
 });

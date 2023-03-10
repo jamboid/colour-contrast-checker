@@ -3,7 +3,7 @@
 :root {
   --dt-ref-fontFamily-base:'Inter', sans-serif; 
   --dt-ref-fontFamily-base:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
-  --dt-ref-fontFamily-code: 'Fira Code', monospace;
+  --dt-ref-fontFamily-code: 'Fira Code', monospace; 
 
   --dt-ref-font-size-1200: #{clamped(40px,54px)};
   --dt-ref-font-size-1000: #{clamped(24px,32px)};

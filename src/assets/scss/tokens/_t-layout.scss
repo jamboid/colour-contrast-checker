@@ -5,6 +5,7 @@ $size-l: 40px;
 $size-xl: 56px;
 
 :root {
+  --dt-ref-size-xsmall:0.25em;
   --dt-ref-size-small:0.5rem;
   --dt-ref-size-medium: #{$size-m};
   --dt-ref-size-large: 2rem;
@@ -20,7 +21,8 @@ $size-xl: 56px;
   --dt-sys-border-rad-normal: var(--dt-ref-size-small);
   --dt-sys-border-rad-small: calc(var(--dt-ref-size-unit)/2);
 
-  --dt-sys-border-rad-form-field:5px;
+  --dt-sys-border-rad-outer:5px;
+  --dt-sys-border-rad-inner:3px;
 
   --dt-sys-size-xs:calc(var(--dt-ref-size-unit)*0.75);
   --dt-sys-size-s:var(--dt-ref-size-unit); 

@@ -60,6 +60,10 @@ const props = defineProps({
     required: false,
     default: false,
   },
+  mode: {
+    type: String,
+    required: false,
+  },
 });
 
 const emit = defineEmits(["update:modelValue"]);
@@ -67,7 +71,7 @@ const emit = defineEmits(["update:modelValue"]);
 const updateValue = (event) => {
   let fieldText = event.target.value;
 
-  if (fieldText.charAt(0) === "#") {
+  if (fieldText.charAt(0) === "#" && props.mode === "hex") {
     fieldText = fieldText.substring(1);
   }
 
@@ -98,7 +102,7 @@ const IconComponent = computed(() => {
 .b_textfield {
   $self: &;
   display: grid;
-  gap: 10px;
+  grid-gap: var(--dt-ref-size-xsmall);
 
   ::placeholder {
     color: #999;
@@ -111,7 +115,8 @@ const IconComponent = computed(() => {
 
   &__label {
     font: var(--text-label-size, var(--dt-sys-heading-700));
-    color: var(--dt-ref-clr-grey-200);
+    font-weight: 500;
+    color: var(--dt-ref-clr-grey-700);
     display: var(--form-field-label-display, block);
 
     &:empty {
@@ -122,7 +127,7 @@ const IconComponent = computed(() => {
   &__field {
     border: 1px solid
       var(--form-field-border-clr, var(--dt-sys-clr-form-field-border));
-    border-radius: var(--dt-sys-border-rad-form-field);
+    border-radius: var(--dt-sys-border-rad-outer);
     overflow: hidden;
     display: flex;
     min-width: var(--form-field-min-width, auto);
@@ -146,7 +151,7 @@ const IconComponent = computed(() => {
   &__input {
     background: var(--text-field-back);
     font: var(--text-field-size, var(--dt-sys-text-code-400));
-    padding: var(--text-field-pd, 0.5em 0.85em);
+    padding: var(--text-field-pd, 0.3em 0.85em);
     width: 100%;
     border: none;
     outline: none;

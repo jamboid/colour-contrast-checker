@@ -37,6 +37,6 @@ const titleMode = computed(() => {
 
 <style lang="scss" scoped>
 .b_title {
-  padding: calc(var(--dt-sys-main-spacing) / 2) var(--dt-sys-main-spacing);
+  flex: 1 1 auto;
 }
 </style>
