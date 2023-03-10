@@ -88,13 +88,13 @@ const ratingIcon = computed(() => {
   background: var(--dt-ref-clr-grey-1000);
   //border: 3px solid #ccc;
   border-radius: var(--dt-sys-border-rad-small);
-  width: 200px;
   box-shadow: var(--dt-sys-shadow-card);
   overflow: hidden;
 
   &__pair {
     width: 100%;
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     //border-radius: 8px;
     overflow: hidden;
   }
@@ -111,7 +111,7 @@ const ratingIcon = computed(() => {
 
   &__sample {
     height: 60px;
-    width: 100px;
+    width: 100%;
     //box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
   }
 

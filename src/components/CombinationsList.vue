@@ -112,8 +112,8 @@ const failList = computed(() => {
   }
 
   &__list {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 25px;
     align-items: flex-start;
     padding-left: 55px;
