@@ -155,6 +155,7 @@ const hasVisibleLabel = computed(() => {
       opacity: 0.5;
       cursor: not-allowed;
       --formAction-background: var(--dt-ref-clr-grey-800);
+      --formAction-background-hov: var(--dt-ref-clr-grey-800);
     }
   }
 

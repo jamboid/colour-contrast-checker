@@ -163,7 +163,7 @@ const palettesOrderUpdated = function () {
 
   &--open {
     --formAction-background: var(--dt-ref-clr-red-400);
-    --formAction-background-hov: var(--dt-ref-clr-red-300);
+    --formAction-background-hov: var(--dt-ref-clr-red-400);
   }
 
   .v-enter-active,
