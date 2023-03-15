@@ -108,6 +108,7 @@ const deletePalette = async () => {
     grid-row: span 2;
     display: flex;
     gap: 5px;
+    align-items: center;
   }
 }
 </style>

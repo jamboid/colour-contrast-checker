@@ -135,10 +135,10 @@ const setFocus = async () => {
 
     &:before {
       width: 5px;
-      height: 16px;
+      height: 12px;
       background: var(--swatch-sample-border-clr);
-      bottom: 0;
-      right: 0;
+      bottom: 2px;
+      right: 2px;
       transform: rotate(-45deg) translate(-3px, 9px);
       z-index: -1;
       border-radius: 3px;
@@ -198,8 +198,8 @@ const setFocus = async () => {
     --swatch-text: var(--dt-ref-clr-grey-1000);
     --swatch-back: var(--dt-ref-clr-grey-200);
     --swatch-sample-border-clr: var(--dt-ref-clr-grey-1000);
-    --swatch-sample-translate: -3px, -3px;
-    --swatch-sample-scale: 0.9;
+    //--swatch-sample-translate: -3px, -3px;
+    //--swatch-sample-scale: 0.9;
     --swatch-sample-border-width: 3px;
     --formAction-background: var(--dt-ref-clr-grey-300);
     --swatch-sample-shadow: inset 0 0 0 var(--swatch-shadow-thickness, 3px)

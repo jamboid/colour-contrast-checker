@@ -70,7 +70,7 @@ body {
     background: var(--dt-ref-clr-grey-900);
     grid-column: 1;
     grid-row: 3;
-    border-radius: 0 var(--dt-sys-size-s) 0 0;
+    border-radius: 0 var(--dt-sys-size-s) var(--dt-sys-size-s) 0;
     position: relative;
     z-index: 1000;
   }
@@ -86,7 +86,7 @@ body {
     background: var(--dt-ref-clr-grey-900);
     grid-column: 2;
     grid-row: 3;
-    border-radius: var(--dt-sys-size-s) 0 0 0;
+    border-radius: var(--dt-sys-size-s) 0 0 var(--dt-sys-size-s);
   }
 }
 </style>
