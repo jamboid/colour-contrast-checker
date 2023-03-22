@@ -1,30 +1,27 @@
 <template>
   <div class="b_addColour">
     <form action="" class="b_addColour__form u_flow" @keyup="createPreview">
-      <h3 class="b_addColour__title">Add a hex colour</h3>
+      <h3 class="b_addColour__title">Pick a colour</h3>
 
       <fieldset class="b_addColour__fieldset">
-        <FormFieldText
+        <FormFieldColour
           id="textfield"
           label="Add Colour Hex"
           icon="hex"
           :status="formMode"
           v-model="state.colourValue"
-          mode="hex"
-        ></FormFieldText>
-        <div
+        ></FormFieldColour>
+        <!-- <div
           class="b_addColour__preview"
           :style="previewStyleObject"
           v-if="validColour"
-        ></div>
+        ></div> -->
         <FormAction
           :onClick="submitForm"
           buttonLabel="Add"
           :status="formMode"
           buttonMode="submit"
-          buttonType="icon"
-        >
-          <FieldIconPlus></FieldIconPlus>
+          ><FieldIconPlus></FieldIconPlus>
         </FormAction>
       </fieldset>
     </form>
@@ -34,7 +31,7 @@
 <script setup>
 // Imports
 import { reactive, computed, ref } from "vue";
-import FormFieldText from "@/components/FormFieldText.vue";
+import FormFieldColour from "@/components/FormFieldColour.vue";
 import FormAction from "@/components/FormAction.vue";
 import FieldIconPlus from "@/components/icons/FieldIconPlus.vue";
 import useValidate from "@vuelidate/core";
@@ -45,12 +42,12 @@ const colourStore = useColourStore();
 
 // Data
 const state = reactive({
-  colourValue: "",
+  colourValue: "#FFFFFF",
   formMode: "default",
 });
 
 // Form Validation and Submission
-const hexRegex = helpers.regex(/^(?:[0-9a-fA-F]{3}){1,2}$/);
+const hexRegex = helpers.regex(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})/);
 
 const rules = computed(() => {
   return {
@@ -66,11 +63,6 @@ const createPreview = () => {
   v$.value.$validate();
 };
 
-const previewStyleObject = computed(() => {
-  const formattedColour = "#" + state.colourValue;
-  return { backgroundColor: formattedColour };
-});
-
 const v$ = useValidate(rules, state);
 
 const validColour = computed(() => {
@@ -82,26 +74,9 @@ const validColour = computed(() => {
 });
 
 const submitForm = async () => {
-  v$.value.$validate(); // checks all inputs
-  if (!v$.value.$error) {
-    let colourHex = state.colourValue;
-
-    if (colourHex.length === 3) {
-      colourHex = colourHex
-        .split("")
-        .map(function (hex) {
-          return hex + hex;
-        })
-        .join("");
-    }
-
-    colourStore.addColour(colourHex.toUpperCase());
-    state.colourValue = "";
-    state.formMode = "default";
-  } else {
-    // Set form to error mode
-    state.formMode = "error";
-  }
+  let colourHex = state.colourValue;
+  colourStore.addColour(colourHex.toUpperCase());
+  state.formMode = "default";
 };
 
 // Functions
@@ -116,26 +91,29 @@ const submitForm = async () => {
 
   &__form {
     --form-field-border-clr: transparent;
-    --form-field-label-display: none;
+    --text-label-font: var(--dt-sys-text-code-400);
     --form-field-error-clr: transparent;
     --form-field-icon-clr: var(--dt-ref-clr-grey-100);
   }
 
   &__title {
-    padding: 1px 5px;
+    padding: 1px 5px 5px;
   }
 
   &__fieldset {
     --flow-space: 7px;
     display: flex;
+    justify-content: space-between;
     align-items: center;
     gap: 10px;
     max-width: 400px;
     margin: 0;
-    border: 1px solid var(--dt-sys-clr-form-field-border);
-    border-radius: var(--dt-sys-border-rad-outer);
+    border: none;
+    border-radius: 28px var(--dt-sys-border-rad-outer)
+      var(--dt-sys-border-rad-outer) 28px;
     background-color: var(--dt-ref-clr-grey-1000);
-    padding: 4px 5px;
+    padding: 8px 12px 8px 8px;
+    box-shadow: var(--dt-sys-shadow-card);
   }
 
   &__preview {

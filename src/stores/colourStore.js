@@ -273,8 +273,8 @@ export const useColourStore = defineStore("colourStore", () => {
   }
 
   function addColour(colourHexToAdd) {
-    const formattedHex = "#" + colourHexToAdd;
-    if (!colourSwatches.value[formattedHex]) {
+    const formattedHex = colourHexToAdd;
+    if (!colourSwatches.value.includes(formattedHex)) {
       colourSwatches.value.unshift(formattedHex);
       this.updateURLData();
     }

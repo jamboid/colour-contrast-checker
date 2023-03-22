@@ -109,7 +109,8 @@ const setFocus = async () => {
   padding: 8px 12px 8px 8px;
   background: var(--swatch-back, var(--dt-ref-clr-grey-1000));
   box-shadow: var(--dt-sys-shadow-card);
-  border-radius: var(--dt-sys-border-rad-small);
+  border-radius: 40px var(--dt-sys-border-rad-small)
+    var(--dt-sys-border-rad-small) 40px;
   cursor: move;
 
   &__colour {
