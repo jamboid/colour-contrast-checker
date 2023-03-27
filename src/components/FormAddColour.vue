@@ -112,7 +112,7 @@ const submitForm = async () => {
     border-radius: 28px var(--dt-sys-border-rad-outer)
       var(--dt-sys-border-rad-outer) 28px;
     background-color: var(--dt-ref-clr-grey-1000);
-    padding: 8px 12px 8px 8px;
+    padding: 4px 12px 4px 4px;
     box-shadow: var(--dt-sys-shadow-card);
   }
 

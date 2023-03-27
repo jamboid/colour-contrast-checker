@@ -170,7 +170,7 @@ const IconComponent = computed(() => {
       }
     }
     #{ $self }__input {
-      padding-left: 0;
+      padding-inline-start: 0;
     }
   }
 }

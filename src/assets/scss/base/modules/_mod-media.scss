@@ -7,7 +7,7 @@
 // Add CSS for Flex Video container
 @mixin flex-video-container($paddingTop: 75%) {
   position: relative;
-  padding-top: $paddingTop;
+  padding-block-start: $paddingTop;
   height: 0;
   overflow: hidden;
 

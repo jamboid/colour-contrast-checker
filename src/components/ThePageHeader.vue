@@ -39,7 +39,7 @@ import GoodLogo from "@/components/icons/IconGoodLogo.vue";
   }
 
   &__logo {
-    padding-right: var(--dt-ref-size-medium);
+    padding-inline-end: var(--dt-ref-size-medium);
     align-items: center;
     max-width: 80px;
   }

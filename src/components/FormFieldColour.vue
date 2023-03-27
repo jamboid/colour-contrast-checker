@@ -147,23 +147,24 @@ const fieldStatus = computed(() => {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    width: 40px;
-    height: 40px;
+    width: 48px;
+    height: 48px;
     font: var(--text-field-size, var(--dt-sys-text-code-400));
     outline: none;
     padding: 0;
     border: none;
     position: relative;
+    border-radius: 50%;
 
     &::-webkit-color-swatch {
       border-radius: 50%;
       border: none;
       padding: 0;
       position: absolute;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0;
+      top: 4px;
+      left: 4px;
+      bottom: 4px;
+      right: 4px;
       border: var(--swatch-sample-border-width, 1px) solid
         var(--swatch-sample-border-clr, rgba(0, 0, 0, 0.2));
     }
