@@ -11,11 +11,6 @@
           :status="formMode"
           v-model="state.colourValue"
         ></FormFieldColour>
-        <!-- <div
-          class="b_addColour__preview"
-          :style="previewStyleObject"
-          v-if="validColour"
-        ></div> -->
         <FormAction
           :onClick="submitForm"
           buttonLabel="Add"
@@ -30,12 +25,10 @@
 
 <script setup>
 // Imports
-import { reactive, computed, ref } from "vue";
+import { reactive, computed } from "vue";
 import FormFieldColour from "@/components/FormFieldColour.vue";
 import FormAction from "@/components/FormAction.vue";
 import FieldIconPlus from "@/components/icons/FieldIconPlus.vue";
-import useValidate from "@vuelidate/core";
-import { required, helpers } from "@vuelidate/validators";
 import { useColourStore } from "@/stores/colourStore";
 
 const colourStore = useColourStore();
@@ -46,31 +39,8 @@ const state = reactive({
   formMode: "default",
 });
 
-// Form Validation and Submission
-const hexRegex = helpers.regex(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})/);
-
-const rules = computed(() => {
-  return {
-    colourValue: { required, hexRegex },
-  };
-});
-
 const formMode = computed(() => {
   return state.formMode;
-});
-
-const createPreview = () => {
-  v$.value.$validate();
-};
-
-const v$ = useValidate(rules, state);
-
-const validColour = computed(() => {
-  if (!v$.value.$error && state.colourValue !== "") {
-    return true;
-  }
-
-  return false;
 });
 
 const submitForm = async () => {
@@ -87,7 +57,6 @@ const submitForm = async () => {
 .b_addColour {
   padding: calc(var(--dt-sys-main-spacing) * 1) var(--dt-sys-main-spacing)
     calc(var(--dt-sys-main-spacing) / 2);
-  //background: var(--dt-ref-clr-grey-900);
 
   &__form {
     --form-field-border-clr: transparent;
