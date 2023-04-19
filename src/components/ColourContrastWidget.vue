@@ -20,7 +20,7 @@
     <div class="b_contrast__details">
       <component class="b_contrast__icon" :is="ratingIcon"></component>
       <p>
-        <strong>{{ contrastRating }}</strong> ({{ contrastRatio }})
+        {{ contrastRating }} <strong>{{ contrastRatio }}:1</strong>
       </p>
     </div>
   </div>
@@ -32,7 +32,8 @@ import { reactive, computed, ref } from "vue";
 import IconResultPass from "@/components/icons/IconResultPass.vue";
 import IconResultPassLarge from "@/components/icons/IconResultPassLarge.vue";
 import IconResultFail from "@/components/icons/IconResultFail.vue";
-
+import { useColourStore } from "@/stores/colourStore";
+const colourStore = useColourStore();
 // Data
 const state = reactive({
   stateItem: [],
@@ -56,8 +57,11 @@ const props = defineProps({
 const contrastRating = computed(() => {
   if (props.contrastRatio < 3) {
     return "Fail";
-  } else if (props.contrastRatio >= 3 && props.contrastRatio < 4.5) {
-    return "AA+";
+  } else if (
+    props.contrastRatio >= colourStore.complianceRatios.min &&
+    props.contrastRatio < colourStore.complianceRatios.max
+  ) {
+    return "Partial";
   } else {
     return "Pass";
   }
@@ -66,7 +70,10 @@ const contrastRating = computed(() => {
 const ratingIcon = computed(() => {
   if (props.contrastRatio < 3) {
     return IconResultFail;
-  } else if (props.contrastRatio >= 3 && props.contrastRatio < 4.5) {
+  } else if (
+    props.contrastRatio >= colourStore.complianceRatios.min &&
+    props.contrastRatio < colourStore.complianceRatios.max
+  ) {
     return IconResultPassLarge;
   } else {
     return IconResultPass;

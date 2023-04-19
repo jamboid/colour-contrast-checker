@@ -6,6 +6,15 @@ import getTitleFromURL from "@/composables/getTitleFromURL";
 import getFocusColourFromURL from "@/composables/getFocusColourFromURL";
 import contrastRatio from "@/composables/calculateColourContrast";
 import SearchArrayByItemPropertyValue from "@/composables/SearchArrayByItemPropertyValue";
+import hexToRGB from "@/composables/hexToRGB.js";
+import { APCAcontrast, sRGBtoY, alphaBlend } from "apca-w3";
+
+import { colorParsley } from "colorparsley";
+
+const aaPassRatio = 4.5;
+const aaPartialRatio = 3;
+const aaaPassRatio = 7;
+const aaaPartialRatio = 4.5;
 
 export const useColourStore = defineStore("colourStore", () => {
   /*
@@ -17,6 +26,17 @@ export const useColourStore = defineStore("colourStore", () => {
   "paletteIDCounter"
 
   */
+
+  const complianceMode = ref("AA");
+
+  const complianceModeGetSet = computed({
+    get() {
+      return complianceMode.value;
+    },
+    set(value) {
+      complianceMode.value = value;
+    },
+  });
 
   const palettes = ref([]);
 
@@ -38,6 +58,22 @@ export const useColourStore = defineStore("colourStore", () => {
     set(value) {
       paletteIDCounter.value = value;
     },
+  });
+
+  const complianceRatios = computed(() => {
+    if (complianceMode.value === "AA") {
+      return {
+        min: aaPartialRatio,
+        max: aaPassRatio,
+      };
+    } else if (complianceMode.value === "AAA") {
+      return {
+        min: aaaPartialRatio,
+        max: aaaPassRatio,
+      };
+    } else {
+      return false;
+    }
   });
 
   /* 
@@ -97,6 +133,15 @@ export const useColourStore = defineStore("colourStore", () => {
             Math.round(contrastRatio(firstColour, secondColour) * 100) / 100
           );
 
+          let apacContrast = APCAcontrast(
+            sRGBtoY(
+              alphaBlend(colorParsley(firstColour), colorParsley(secondColour))
+            ),
+            sRGBtoY(colorParsley(secondColour))
+          );
+
+          //colourPair.push(apacContrast);
+
           uniqueCombinations.push(colourPair);
         }
       });
@@ -112,7 +157,7 @@ export const useColourStore = defineStore("colourStore", () => {
   const passColourCombinations = computed(() => {
     const combos = [];
     uniqueColourCombinations.value.forEach((item) => {
-      if (item[2] >= 4.5) {
+      if (item[2] >= complianceRatios.value.max) {
         combos.push(item);
       }
     });
@@ -123,7 +168,10 @@ export const useColourStore = defineStore("colourStore", () => {
   const largePassColourCombinations = computed(() => {
     const combos = [];
     uniqueColourCombinations.value.forEach((item) => {
-      if (item[2] >= 3 && item[2] < 4.5) {
+      if (
+        item[2] >= complianceRatios.value.min &&
+        item[2] < complianceRatios.value.max
+      ) {
         combos.push(item);
       }
     });
@@ -134,7 +182,7 @@ export const useColourStore = defineStore("colourStore", () => {
   const failColourCombinations = computed(() => {
     const combos = [];
     uniqueColourCombinations.value.forEach((item) => {
-      if (item[2] < 3) {
+      if (item[2] < complianceRatios.value.min) {
         combos.push(item);
       }
     });
@@ -348,6 +396,7 @@ export const useColourStore = defineStore("colourStore", () => {
 
   // Store API
   return {
+    complianceModeGetSet,
     palettesGetSet,
     paletteIDCounterGetSet,
     colourSwatches,
@@ -373,5 +422,6 @@ export const useColourStore = defineStore("colourStore", () => {
     loadLocalPalette,
     deleteLocalPalette,
     paletteCanBeArchived,
+    complianceRatios,
   };
 });

@@ -42,8 +42,8 @@ import { reactive, computed, ref } from "vue";
 import FormAction from "@/components/FormAction.vue";
 import IconDustbin from "@/components/icons/IconDustbin.vue";
 import IconCopy from "@/components/icons/IconCopy.vue";
+import hexToRGB from "@/composables/hexToRGB.js";
 import { useColourStore } from "@/stores/colourStore";
-
 const colourStore = useColourStore();
 
 // Data
@@ -92,6 +92,7 @@ const setFocus = async () => {
   if (isFocus.value) {
     colourStore.focusColourGetSet = "";
   } else {
+    window.console.log(hexToRGB(props.colourHex));
     colourStore.focusColourGetSet = props.colourHex;
   }
 };

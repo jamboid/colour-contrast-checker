@@ -13,6 +13,7 @@
       </div>
     </section>
     <main class="b_page__content">
+      <ComplianceModeToggle></ComplianceModeToggle>
       <CombinationsList></CombinationsList>
     </main>
   </div>
@@ -20,13 +21,14 @@
 
 <script setup>
 import { onMounted } from "vue";
-import ThePageHeader from "./components/ThePageHeader.vue";
+import ThePageHeader from "@/components/ThePageHeader.vue";
 import FormAddColourVue from "@/components/FormAddColour.vue";
 import PaletteSelector from "@/components/PaletteSelector.vue";
 import SwatchList from "@/components/SwatchList.vue";
-import CombinationsList from "./components/CombinationsList.vue";
-import PaletteTitle from "./components/PaletteTitle.vue";
-import PaletteControls from "./components/PaletteControls.vue";
+import CombinationsList from "@/components/CombinationsList.vue";
+import PaletteTitle from "@/components/PaletteTitle.vue";
+import PaletteControls from "@/components/PaletteControls.vue";
+import ComplianceModeToggle from "@/components/ComplianceModeToggle.vue";
 import { useColourStore } from "@/stores/colourStore";
 
 const colourStore = useColourStore();
