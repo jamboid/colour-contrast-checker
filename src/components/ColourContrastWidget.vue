@@ -20,7 +20,7 @@
     <div class="b_contrast__details">
       <component class="b_contrast__icon" :is="ratingIcon"></component>
       <p>
-        {{ contrastRating }} <strong>{{ contrastRatio }}:1</strong>
+        {{ contrastRating }} <strong>{{ contrastRatio }}</strong>
       </p>
     </div>
   </div>
