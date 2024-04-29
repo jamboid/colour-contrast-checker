@@ -1,6 +1,6 @@
-# colour-checker
+# Colour Palettte Accessibility Checker
 
-This template should help get you started developing with Vue 3 in Vite.
+This is a tool for analysing your brand colour palette and measuring which colour combinations pass and fail WCAG contrast goals. It is built in Vue3. 
 
 ## Recommended IDE Setup
 
