@@ -19,12 +19,12 @@
 
 <script setup>
 // Imports
-import { reactive, computed, ref } from "vue";
+import { reactive, computed } from "vue";
 
 // Data
-const state = reactive({
-  stateItem: [],
-});
+// const state = reactive({
+//   stateItem: [],
+// });
 
 const props = defineProps({
   onClick: {

@@ -2,18 +2,18 @@
   <header class="b_pageHeader">
     <div class="b_pageHeader__inner">
       <div class="b_pageHeader__title u_row">
-        <figure class="b_pageHeader__logo u_resMedia">
-          <GoodLogo></GoodLogo>
-        </figure>
         <h2 class="b_pageHeader__titleName">Colour Palette Contrast Checker</h2>
       </div>
+      <figure class="b_pageHeader__logo">
+        <JBLogo></JBLogo>
+      </figure>
     </div>
   </header>
 </template>
 
 <script setup>
 // Imports
-import GoodLogo from "@/components/icons/IconGoodLogo.vue";
+import JBLogo from "./icons/JBLogo.vue";
 </script>
 
 <style lang="scss" scoped>
@@ -28,7 +28,7 @@ import GoodLogo from "@/components/icons/IconGoodLogo.vue";
 
   &__inner {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
     grid-gap: var(--dt-ref-size-large);
   }
 
@@ -39,19 +39,22 @@ import GoodLogo from "@/components/icons/IconGoodLogo.vue";
   }
 
   &__logo {
-    padding-inline-end: var(--dt-ref-size-medium);
+    justify-self: stretch;
+    display: flex;
+    padding-inline-end: var(--dt-sys-main-spacing);
     align-items: center;
-    max-width: 80px;
+    justify-content: end;
+    width: 100%;
+
+    --brand-logo-width: 50px;
+    --brand-logo-back-clr: var(--dt-ref-clr-grey-200);
+    --brand-logo-front-clr: white;
   }
 
   &__titleName {
     color: var(--dt-ref-clr-grey-1000);
     font-weight: 500;
     font-size: 24px;
-  }
-
-  :deep([fill]) {
-    fill: var(--dt-ref-clr-grey-1000);
   }
 }
 </style>
