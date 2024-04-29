@@ -6,12 +6,14 @@
     "xml",
     "scss",
     "vue",
-    "json"
+    "json",
+    "plaintext"
   ],
   "eablokker.tabsSidebar.config.customTabOrder" : [
     "file:\/\/\/Users\/jamieboyd\/GitHub\/colour-contrast-checker\/src\/components\/icons\/jb_logo.svg",
     "file:\/\/\/Users\/jamieboyd\/GitHub\/colour-contrast-checker\/src\/assets\/scss\/tokens\/_t-colours.scss",
     "file:\/\/\/Users\/jamieboyd\/GitHub\/colour-contrast-checker\/src\/components\/ThePageHeader.vue",
-    "file:\/\/\/Users\/jamieboyd\/GitHub\/colour-contrast-checker\/.nova\/Configuration.json"
+    "file:\/\/\/Users\/jamieboyd\/GitHub\/colour-contrast-checker\/.nova\/Configuration.json",
+    "file:\/\/\/Users\/jamieboyd\/GitHub\/colour-contrast-checker\/.gitignore"
   ]
 }
